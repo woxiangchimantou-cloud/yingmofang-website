@@ -1913,7 +1913,7 @@
         所有数据完全本地化，安全掌控你的每一帧热爱。
     </p>
     <div class="hero-buttons">
-        <a href="#" id="downloadBtn" class="btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> 立即下载 <span id="versionBadge" style="font-size:0.8em;opacity:0.8;"></span></a>
+        <a href="#pricing" id="downloadBtn" class="btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> 立即下载 <span id="versionBadge" style="font-size:0.8em;opacity:0.8;"></span></a>
         <a href="#demo" class="btn-secondary"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.64 13.19a1 1 0 00-1.41 0l-2.12 2.12a1 1 0 001.41 1.41l2.12-2.12a1 1 0 000-1.41zM11.5 8c.83 0 1.5-.67 1.5-1.5S12.33 5 11.5 5 10 5.67 10 6.5 10.67 8 11.5 8zm4.5 5.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg> 体验预览功能</a>
     </div>
     <div class="hero-stats">
@@ -2661,13 +2661,11 @@
             }
 
             if (downloadUrl) {
-                if (downloadBtn) downloadBtn.href = downloadUrl;
                 if (pricingDownloadBtn) pricingDownloadBtn.href = downloadUrl;
             }
         } catch (e) {
             // API 失败时使用备用链接（GitHub Releases 页面）
             const releasesUrl = `https://github.com/${GITHUB_REPO}/releases/latest`;
-            if (downloadBtn) downloadBtn.href = releasesUrl;
             if (pricingDownloadBtn) pricingDownloadBtn.href = releasesUrl;
             if (versionBadge) versionBadge.textContent = '';
         }
