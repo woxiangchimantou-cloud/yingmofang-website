@@ -1820,6 +1820,194 @@
             letter-spacing: 1px;
         }
 
+        /* 滚动渐入动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* 新功能高亮区 */
+        .whats-new {
+            position: relative;
+            z-index: 1;
+            padding: 80px 0;
+            background: linear-gradient(180deg, transparent, rgba(236, 72, 153, 0.03), transparent);
+        }
+
+        .whats-new-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .whats-new-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(251, 146, 60, 0.15));
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #f9a8d4;
+            margin-bottom: 16px;
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        .whats-new-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff, #f9a8d4, #c4b5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .whats-new-header p {
+            color: #9ca3af;
+            font-size: 1.05rem;
+        }
+
+        .whats-new-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .whats-new-card {
+            background: linear-gradient(145deg, rgba(18, 18, 26, 0.9), rgba(12, 12, 18, 0.9));
+            border-radius: 28px;
+            padding: 36px 32px;
+            border: 1px solid rgba(236, 72, 153, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whats-new-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ec4899, #f59e0b, #ec4899);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transition: transform 0.4s;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        .whats-new-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(236, 72, 153, 0.4);
+            box-shadow: 0 20px 50px rgba(236, 72, 153, 0.2);
+        }
+
+        .whats-new-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .whats-new-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(251, 146, 60, 0.2));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .whats-new-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 14px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .whats-new-card p {
+            color: #9ca3af;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .whats-new-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(251, 146, 60, 0.2));
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #f9a8d4;
+            border: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .whats-new-demo {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(236, 72, 153, 0.1);
+        }
+
+        .whats-new-demo-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(236, 72, 153, 0.08);
+        }
+
+        .whats-new-demo-row:last-child {
+            border-bottom: none;
+        }
+
+        .whats-new-demo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(251, 146, 60, 0.2));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .whats-new-demo-text {
+            font-size: 0.85rem;
+            color: #d1d5db;
+        }
+
+        .whats-new-demo-text strong {
+            color: #f9a8d4;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .whats-new-grid {
+                grid-template-columns: 1fr;
+            }
+            .whats-new-card {
+                padding: 28px 24px;
+            }
+        }
+
         /* 响应式 */
         @media (max-width: 768px) {
             .container { padding: 0 20px; }
@@ -1882,6 +2070,7 @@
         </div>
         <div class="nav-links">
             <a href="#core">核心功能</a>
+            <a href="#whats-new">新功能</a>
             <a href="#demo">悬停预览</a>
             <a href="#screenshot">界面预览</a>
             <a href="#features">更多功能</a>
@@ -1895,6 +2084,7 @@
     </div>
     <div class="mobile-menu" id="mobileMenu">
         <a href="#core">核心功能</a>
+        <a href="#whats-new">新功能</a>
         <a href="#demo">悬停预览</a>
         <a href="#screenshot">界面预览</a>
         <a href="#features">更多功能</a>
@@ -1933,7 +2123,7 @@
 </section>
 
 <!-- 三大核心功能展示区 -->
-<section id="core" class="core-features">
+<section id="core" class="core-features reveal">
     <div class="core-header">
         <h2>⚡ 三大核心黑科技</h2>
         <p>让影音管理变得前所未有的智能</p>
@@ -1960,8 +2150,84 @@
     </div>
 </section>
 
+<!-- 新功能高亮区 -->
+<section id="whats-new" class="whats-new">
+    <div class="container">
+        <div class="whats-new-header reveal">
+            <div class="whats-new-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM18.92 8h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+                最新功能
+            </div>
+            <h2>🚀 全新升级 · 三大黑科技</h2>
+            <p>AI识图、多屏对比、智能搜索，让影库管理进入智能时代</p>
+        </div>
+        <div class="whats-new-grid">
+            <div class="whats-new-card reveal reveal-delay-1">
+                <div class="whats-new-icon">📷</div>
+                <h3>AI 识图搜番</h3>
+                <p>上传视频截图或直接粘贴图片，AI智能识别番号信息，快速找到视频来源。告别手动搜索，一张图即可定位。</p>
+                <span class="whats-new-tag">AI驱动 · 智能识别</span>
+                <div class="whats-new-demo">
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">📤</div>
+                        <div class="whats-new-demo-text">上传截图 → <strong>AI识别</strong> → 获取番号</div>
+                    </div>
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">🎯</div>
+                        <div class="whats-new-demo-text">精准匹配 · <strong>一键获取</strong>元数据</div>
+                    </div>
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">⚡</div>
+                        <div class="whats-new-demo-text">毫秒级响应 · <strong>告别找不到</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="whats-new-card reveal reveal-delay-2">
+                <div class="whats-new-icon">🖥️</div>
+                <h3>多屏播放对比</h3>
+                <p>同时播放多个视频，支持2/4分屏对比观看。方便挑选最佳版本，对比不同画质，多角度欣赏精彩内容。</p>
+                <span class="whats-new-tag">2/4分屏 · 同步对比</span>
+                <div class="whats-new-demo">
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">🔲</div>
+                        <div class="whats-new-demo-text"><strong>2分屏</strong> · 左右对比观看</div>
+                    </div>
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">⊞</div>
+                        <div class="whats-new-demo-text"><strong>4分屏</strong> · 四路同时播放</div>
+                    </div>
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">⚖️</div>
+                        <div class="whats-new-demo-text">画质对比 · <strong>挑选最佳版本</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="whats-new-card reveal reveal-delay-3">
+                <div class="whats-new-icon">🔍</div>
+                <h3>番号智能搜索</h3>
+                <p>输入番号快速搜索元数据信息，一键获取封面、标题、演员、标签等详细信息。支持模糊匹配和智能推荐。</p>
+                <span class="whats-new-tag">番号搜索 · 智能匹配</span>
+                <div class="whats-new-demo">
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">⌨️</div>
+                        <div class="whats-new-demo-text">输入番号 → <strong>智能匹配</strong></div>
+                    </div>
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">📋</div>
+                        <div class="whats-new-demo-text">一键获取 · <strong>封面+演员+标签</strong></div>
+                    </div>
+                    <div class="whats-new-demo-row">
+                        <div class="whats-new-demo-icon">💡</div>
+                        <div class="whats-new-demo-text">模糊匹配 · <strong>不怕记不全</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- 悬停预览体验区 -->
-<section id="demo" class="demo-section">
+<section id="demo" class="demo-section reveal">
     <div class="container">
         <div class="demo-header">
             <div class="demo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13.64 13.19a1 1 0 00-1.41 0l-2.12 2.12a1 1 0 001.41 1.41l2.12-2.12a1 1 0 000-1.41zM11.5 8c.83 0 1.5-.67 1.5-1.5S12.33 5 11.5 5 10 5.67 10 6.5 10.67 8 11.5 8zm4.5 5.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg></div>
@@ -1978,7 +2244,7 @@
 </section>
 
 <!-- 软件截图展示区 -->
-<section id="screenshot" class="screenshot-section">
+<section id="screenshot" class="screenshot-section reveal">
     <div class="container">
         <!-- 电脑版模拟界面 -->
         <div class="screenshot-card">
@@ -2307,7 +2573,7 @@
 </section>
 
 <!-- 更多功能 -->
-<section id="features" class="features-section">
+<section id="features" class="features-section reveal">
     <div class="container">
         <h2 class="section-title">✨ 影魔方完整能力</h2>
         <p class="section-sub">从管理到播放，一站式解决你的影音需求</p>
@@ -2392,7 +2658,7 @@
 </section>
 
 <!-- 价格区域 -->
-<section id="pricing" class="pricing-section">
+<section id="pricing" class="pricing-section reveal">
     <div class="container">
         <h2 class="section-title">💎 选择适合你的方案</h2>
         <p class="section-sub">扫码添加客服微信，获取注册码激活软件</p>
@@ -2459,6 +2725,7 @@
                 <h4>产品</h4>
                 <ul>
                     <li><a href="#core">功能特色</a></li>
+                    <li><a href="#whats-new">新功能</a></li>
                     <li><a href="#demo">体验预览</a></li>
                     <li><a href="#pricing">价格</a></li>
                     <li><a href="#">更新日志</a></li>
@@ -2672,6 +2939,33 @@
     }
 
     fetchLatestRelease();
+
+    // 滚动渐入动画
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // 平滑滚动到锚点（带导航栏偏移）
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                const navHeight = 70;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+            }
+        });
+    });
 </script>
 </body>
 </html>
