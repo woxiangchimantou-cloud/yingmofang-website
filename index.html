@@ -303,7 +303,7 @@
             font-weight: 600;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .nav-links {
                 display: none !important;
             }
@@ -1820,229 +1820,484 @@
             letter-spacing: 1px;
         }
 
-        /* 滚动渐入动画 */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* 新功能高亮区 */
-        .whats-new {
-            position: relative;
-            z-index: 1;
-            padding: 80px 0;
-            background: linear-gradient(180deg, transparent, rgba(236, 72, 153, 0.03), transparent);
-        }
-
-        .whats-new-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .whats-new-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(251, 146, 60, 0.15));
-            border: 1px solid rgba(236, 72, 153, 0.3);
-            border-radius: 40px;
-            padding: 6px 16px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #f9a8d4;
-            margin-bottom: 16px;
-            animation: badgePulse 3s ease-in-out infinite;
-        }
-
-        .whats-new-header h2 {
-            font-size: 2.2rem;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #ffffff, #f9a8d4, #c4b5fd);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .whats-new-header p {
-            color: #9ca3af;
-            font-size: 1.05rem;
-        }
-
-        .whats-new-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 28px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .whats-new-card {
-            background: linear-gradient(145deg, rgba(18, 18, 26, 0.9), rgba(12, 12, 18, 0.9));
-            border-radius: 28px;
-            padding: 36px 32px;
-            border: 1px solid rgba(236, 72, 153, 0.15);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .whats-new-card::before {
-            content: '';
-            position: absolute;
+        /* ============ 教程抽屉面板 ============ */
+        .tutorial-backdrop {
+            position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .tutorial-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tutorial-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 92%;
+            max-width: 1280px;
+            height: 100vh;
+            background: #07070c;
+            z-index: 9999;
+            transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -25px 0 80px rgba(0, 0, 0, 0.6);
+        }
+        .tutorial-drawer.open {
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ec4899, #f59e0b, #ec4899);
-            background-size: 200% 100%;
-            transform: scaleX(0);
-            transition: transform 0.4s;
-            animation: gradientMove 3s linear infinite;
         }
 
-        .whats-new-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(236, 72, 153, 0.4);
-            box-shadow: 0 20px 50px rgba(236, 72, 153, 0.2);
-        }
-
-        .whats-new-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .whats-new-icon {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(251, 146, 60, 0.2));
-            border-radius: 20px;
+        .tutorial-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2rem;
+            justify-content: space-between;
+            padding: 18px 32px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+            background: rgba(5, 5, 8, 0.95);
+            backdrop-filter: blur(20px);
+            flex-shrink: 0;
+            z-index: 10;
         }
-
-        .whats-new-card h3 {
-            font-size: 1.35rem;
-            margin-bottom: 14px;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        .whats-new-card p {
-            color: #9ca3af;
-            font-size: 0.92rem;
-            line-height: 1.7;
-            margin-bottom: 18px;
-        }
-
-        .whats-new-tag {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(251, 146, 60, 0.2));
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: #f9a8d4;
-            border: 1px solid rgba(236, 72, 153, 0.2);
-        }
-
-        .whats-new-demo {
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(236, 72, 153, 0.1);
-        }
-
-        .whats-new-demo-row {
+        .tutorial-header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(236, 72, 153, 0.08);
+            gap: 14px;
         }
-
-        .whats-new-demo-row:last-child {
-            border-bottom: none;
-        }
-
-        .whats-new-demo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(251, 146, 60, 0.2));
+        .tutorial-header-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+        .tutorial-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #c4b5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .tutorial-subtitle {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+        .tutorial-close {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(124, 58, 237, 0.12);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: #c084fc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .tutorial-close:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+            color: #f87171;
+            transform: rotate(90deg);
+        }
+
+        .tutorial-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .tutorial-sidebar {
+            width: 270px;
+            flex-shrink: 0;
+            border-right: 1px solid rgba(124, 58, 237, 0.12);
+            overflow-y: auto;
+            padding: 20px 14px;
+            background: rgba(5, 5, 8, 0.4);
+        }
+        .tutorial-sidebar-section {
+            font-size: 0.68rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 14px 14px 8px;
+            font-weight: 600;
+        }
+        .tutorial-sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 14px;
+            color: #9ca3af;
+            font-size: 0.84rem;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+            border-left: 3px solid transparent;
+        }
+        .tutorial-sidebar-item:hover {
+            background: rgba(124, 58, 237, 0.1);
+            color: #c084fc;
+        }
+        .tutorial-sidebar-item.active {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.15));
+            color: #c084fc;
+            border-left-color: #7c3aed;
+        }
+        .tutorial-sidebar-item .t-icon {
             font-size: 1rem;
+            width: 22px;
+            text-align: center;
             flex-shrink: 0;
         }
 
-        .whats-new-demo-text {
-            font-size: 0.85rem;
-            color: #d1d5db;
+        .tutorial-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 48px 80px;
+            scroll-behavior: smooth;
         }
 
-        .whats-new-demo-text strong {
-            color: #f9a8d4;
+        .tutorial-chapter {
+            margin-bottom: 56px;
+            scroll-margin-top: 20px;
+        }
+        .tutorial-chapter-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #ffffff, #c4b5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .tutorial-chapter-title .t-icon {
+            font-size: 1.8rem;
+        }
+        .tutorial-chapter-desc {
+            color: #9ca3af;
+            font-size: 0.98rem;
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .tutorial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .tutorial-card {
+            background: linear-gradient(145deg, rgba(18, 18, 26, 0.8), rgba(12, 12, 18, 0.8));
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            border-radius: 14px;
+            padding: 18px;
+            transition: all 0.3s;
+        }
+        .tutorial-card:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.12);
+        }
+        .tutorial-card-icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+        .tutorial-card h4 {
+            color: #ffffff;
+            font-size: 0.98rem;
+            margin-bottom: 6px;
+        }
+        .tutorial-card p {
+            color: #9ca3af;
+            font-size: 0.83rem;
+            line-height: 1.6;
+        }
+
+        .tutorial-steps {
+            margin: 24px 0;
+        }
+        .tutorial-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 18px;
+            position: relative;
+        }
+        .tutorial-step:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 18px;
+            top: 40px;
+            bottom: -10px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.3), transparent);
+        }
+        .tutorial-step-num {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+            z-index: 1;
+        }
+        .tutorial-step-content {
+            flex: 1;
+            padding-top: 6px;
+        }
+        .tutorial-step-content h4 {
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        .tutorial-step-content p {
+            color: #9ca3af;
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .tutorial-callout {
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .tutorial-callout-tip {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .tutorial-callout-warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .tutorial-callout-info {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(236, 72, 153, 0.05));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        .tutorial-callout-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            line-height: 1.5;
+        }
+        .tutorial-callout-text {
+            color: #d1d5db;
+            font-size: 0.86rem;
+            line-height: 1.7;
+        }
+
+        .tutorial-collapsible {
+            margin: 14px 0;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .tutorial-collapsible-header {
+            padding: 13px 18px;
+            background: rgba(124, 58, 237, 0.08);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .tutorial-collapsible-header:hover {
+            background: rgba(124, 58, 237, 0.15);
+        }
+        .tutorial-collapsible-title {
+            color: #ffffff;
+            font-size: 0.92rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tutorial-collapsible-arrow {
+            color: #c084fc;
+            transition: transform 0.3s;
+            font-size: 0.8rem;
+        }
+        .tutorial-collapsible.open .tutorial-collapsible-arrow {
+            transform: rotate(180deg);
+        }
+        .tutorial-collapsible-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        .tutorial-collapsible.open .tutorial-collapsible-body {
+            max-height: 3000px;
+        }
+        .tutorial-collapsible-content {
+            padding: 16px 18px;
+            color: #9ca3af;
+            font-size: 0.86rem;
+            line-height: 1.8;
+        }
+        .tutorial-collapsible-content p {
+            margin-bottom: 10px;
+        }
+        .tutorial-collapsible-content ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .tutorial-collapsible-content li {
+            margin-bottom: 6px;
+        }
+
+        .tutorial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        .tutorial-table th {
+            background: rgba(124, 58, 237, 0.15);
+            color: #c084fc;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.85rem;
             font-weight: 600;
         }
+        .tutorial-table td {
+            padding: 11px 16px;
+            color: #d1d5db;
+            font-size: 0.84rem;
+            border-top: 1px solid rgba(124, 58, 237, 0.1);
+        }
+        .tutorial-table tr:hover td {
+            background: rgba(124, 58, 237, 0.05);
+        }
 
-        @media (max-width: 768px) {
-            .whats-new-grid {
-                grid-template-columns: 1fr;
+        .tutorial-faq-item {
+            background: linear-gradient(145deg, rgba(18, 18, 26, 0.6), rgba(12, 12, 18, 0.6));
+            border: 1px solid rgba(124, 58, 237, 0.12);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .tutorial-faq-q {
+            padding: 14px 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .tutorial-faq-q:hover {
+            background: rgba(124, 58, 237, 0.08);
+        }
+        .tutorial-faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #9ca3af;
+            font-size: 0.86rem;
+            line-height: 1.7;
+        }
+        .tutorial-faq-item.open .tutorial-faq-a {
+            max-height: 500px;
+            padding: 0 18px 14px;
+        }
+
+        .tutorial-shortcut {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: #c084fc;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            margin: 0 2px;
+        }
+
+        @media (max-width: 900px) {
+            .tutorial-drawer {
+                width: 100%;
             }
-            .whats-new-card {
-                padding: 28px 24px;
+            .tutorial-sidebar {
+                display: none;
+            }
+            .tutorial-content {
+                padding: 28px 22px 60px;
+            }
+            .tutorial-chapter-title {
+                font-size: 1.35rem;
+            }
+            .tutorial-header {
+                padding: 14px 20px;
             }
         }
 
         /* 响应式 */
         @media (max-width: 768px) {
             .container { padding: 0 20px; }
-            
+
             .nav-links { display: none; }
-            
+
             .hero { padding: 100px 20px 60px; }
-            
+
             .hero h1 { font-size: 2rem; }
-            
+
             .hero-stats { gap: 30px; }
-            
+
             .stat-value { font-size: 2rem; }
-            
+
             .core-features { margin: 0 16px 40px; padding: 40px 24px; }
-            
+
             .demo-cards { gap: 20px; }
-            
+
             .demo-card { width: 100%; max-width: 320px; }
-            
+
             .section-title { font-size: 1.6rem; }
-            
+
             .pricing-card { padding: 40px 24px; }
-            
+
             .pricing-price { font-size: 3rem; }
-            
+
             .screenshot-card { padding: 24px; }
-            
+
             .screenshot-card h3 { font-size: 1.2rem; }
-            
+
             .social-links {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .social-card {
                 width: 100%;
                 max-width: 200px;
@@ -2070,10 +2325,10 @@
         </div>
         <div class="nav-links">
             <a href="#core">核心功能</a>
-            <a href="#whats-new">新功能</a>
             <a href="#demo">悬停预览</a>
             <a href="#screenshot">界面预览</a>
             <a href="#features">更多功能</a>
+            <a href="javascript:void(0)" id="tutorialBtn" style="color:#c084fc;">使用教程</a>
             <a href="#pricing" class="nav-btn">获取软件</a>
         </div>
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">
@@ -2084,10 +2339,10 @@
     </div>
     <div class="mobile-menu" id="mobileMenu">
         <a href="#core">核心功能</a>
-        <a href="#whats-new">新功能</a>
         <a href="#demo">悬停预览</a>
         <a href="#screenshot">界面预览</a>
         <a href="#features">更多功能</a>
+        <a href="javascript:void(0)" id="tutorialBtnMobile" style="color:#c084fc;">使用教程</a>
         <a href="#pricing" class="mobile-menu-btn-primary">获取软件</a>
     </div>
 </nav>
@@ -2123,7 +2378,7 @@
 </section>
 
 <!-- 三大核心功能展示区 -->
-<section id="core" class="core-features reveal">
+<section id="core" class="core-features">
     <div class="core-header">
         <h2>⚡ 三大核心黑科技</h2>
         <p>让影音管理变得前所未有的智能</p>
@@ -2150,84 +2405,8 @@
     </div>
 </section>
 
-<!-- 新功能高亮区 -->
-<section id="whats-new" class="whats-new">
-    <div class="container">
-        <div class="whats-new-header reveal">
-            <div class="whats-new-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM18.92 8h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
-                最新功能
-            </div>
-            <h2>🚀 全新升级 · 三大黑科技</h2>
-            <p>AI识图、多屏对比、智能搜索，让影库管理进入智能时代</p>
-        </div>
-        <div class="whats-new-grid">
-            <div class="whats-new-card reveal reveal-delay-1">
-                <div class="whats-new-icon">📷</div>
-                <h3>AI 识图搜番</h3>
-                <p>上传视频截图或直接粘贴图片，AI智能识别番号信息，快速找到视频来源。告别手动搜索，一张图即可定位。</p>
-                <span class="whats-new-tag">AI驱动 · 智能识别</span>
-                <div class="whats-new-demo">
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">📤</div>
-                        <div class="whats-new-demo-text">上传截图 → <strong>AI识别</strong> → 获取番号</div>
-                    </div>
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">🎯</div>
-                        <div class="whats-new-demo-text">精准匹配 · <strong>一键获取</strong>元数据</div>
-                    </div>
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">⚡</div>
-                        <div class="whats-new-demo-text">毫秒级响应 · <strong>告别找不到</strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="whats-new-card reveal reveal-delay-2">
-                <div class="whats-new-icon">🖥️</div>
-                <h3>多屏播放对比</h3>
-                <p>同时播放多个视频，支持2/4分屏对比观看。方便挑选最佳版本，对比不同画质，多角度欣赏精彩内容。</p>
-                <span class="whats-new-tag">2/4分屏 · 同步对比</span>
-                <div class="whats-new-demo">
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">🔲</div>
-                        <div class="whats-new-demo-text"><strong>2分屏</strong> · 左右对比观看</div>
-                    </div>
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">⊞</div>
-                        <div class="whats-new-demo-text"><strong>4分屏</strong> · 四路同时播放</div>
-                    </div>
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">⚖️</div>
-                        <div class="whats-new-demo-text">画质对比 · <strong>挑选最佳版本</strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="whats-new-card reveal reveal-delay-3">
-                <div class="whats-new-icon">🔍</div>
-                <h3>番号智能搜索</h3>
-                <p>输入番号快速搜索元数据信息，一键获取封面、标题、演员、标签等详细信息。支持模糊匹配和智能推荐。</p>
-                <span class="whats-new-tag">番号搜索 · 智能匹配</span>
-                <div class="whats-new-demo">
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">⌨️</div>
-                        <div class="whats-new-demo-text">输入番号 → <strong>智能匹配</strong></div>
-                    </div>
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">📋</div>
-                        <div class="whats-new-demo-text">一键获取 · <strong>封面+演员+标签</strong></div>
-                    </div>
-                    <div class="whats-new-demo-row">
-                        <div class="whats-new-demo-icon">💡</div>
-                        <div class="whats-new-demo-text">模糊匹配 · <strong>不怕记不全</strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- 悬停预览体验区 -->
-<section id="demo" class="demo-section reveal">
+<section id="demo" class="demo-section">
     <div class="container">
         <div class="demo-header">
             <div class="demo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13.64 13.19a1 1 0 00-1.41 0l-2.12 2.12a1 1 0 001.41 1.41l2.12-2.12a1 1 0 000-1.41zM11.5 8c.83 0 1.5-.67 1.5-1.5S12.33 5 11.5 5 10 5.67 10 6.5 10.67 8 11.5 8zm4.5 5.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg></div>
@@ -2244,7 +2423,7 @@
 </section>
 
 <!-- 软件截图展示区 -->
-<section id="screenshot" class="screenshot-section reveal">
+<section id="screenshot" class="screenshot-section">
     <div class="container">
         <!-- 电脑版模拟界面 -->
         <div class="screenshot-card">
@@ -2573,7 +2752,7 @@
 </section>
 
 <!-- 更多功能 -->
-<section id="features" class="features-section reveal">
+<section id="features" class="features-section">
     <div class="container">
         <h2 class="section-title">✨ 影魔方完整能力</h2>
         <p class="section-sub">从管理到播放，一站式解决你的影音需求</p>
@@ -2658,7 +2837,7 @@
 </section>
 
 <!-- 价格区域 -->
-<section id="pricing" class="pricing-section reveal">
+<section id="pricing" class="pricing-section">
     <div class="container">
         <h2 class="section-title">💎 选择适合你的方案</h2>
         <p class="section-sub">扫码添加客服微信，获取注册码激活软件</p>
@@ -2725,7 +2904,6 @@
                 <h4>产品</h4>
                 <ul>
                     <li><a href="#core">功能特色</a></li>
-                    <li><a href="#whats-new">新功能</a></li>
                     <li><a href="#demo">体验预览</a></li>
                     <li><a href="#pricing">价格</a></li>
                     <li><a href="#">更新日志</a></li>
@@ -2770,6 +2948,911 @@
     </div>
 </div>
 
+<!-- ============ 使用教程抽屉面板 ============ -->
+<div class="tutorial-backdrop" id="tutorialBackdrop"></div>
+<aside class="tutorial-drawer" id="tutorialDrawer" aria-label="使用教程">
+    <div class="tutorial-header">
+        <div class="tutorial-header-left">
+            <div class="tutorial-header-icon">📖</div>
+            <div>
+                <div class="tutorial-title">影魔方 · 使用教程</div>
+                <div class="tutorial-subtitle">从入门到精通，14 章完整指南</div>
+            </div>
+        </div>
+        <button class="tutorial-close" id="tutorialClose" aria-label="关闭教程">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+    </div>
+    <div class="tutorial-body">
+        <!-- 侧边目录 -->
+        <nav class="tutorial-sidebar" id="tutorialSidebar">
+            <div class="tutorial-sidebar-section">入门</div>
+            <div class="tutorial-sidebar-item active" data-target="ch-quickstart"><span class="t-icon">🚀</span>快速开始</div>
+            <div class="tutorial-sidebar-item" data-target="ch-install"><span class="t-icon">📦</span>安装与激活</div>
+            <div class="tutorial-sidebar-item" data-target="ch-config"><span class="t-icon">⚙️</span>基础配置与AI</div>
+            <div class="tutorial-sidebar-section">视频管理</div>
+            <div class="tutorial-sidebar-item" data-target="ch-video"><span class="t-icon">🎬</span>视频库管理</div>
+            <div class="tutorial-sidebar-item" data-target="ch-tags"><span class="t-icon">🏷️</span>智能标签分类</div>
+            <div class="tutorial-sidebar-item" data-target="ch-preview"><span class="t-icon">🖱️</span>25帧悬停预览</div>
+            <div class="tutorial-sidebar-item" data-target="ch-scraper"><span class="t-icon">🎭</span>HomeBuild 刮削器</div>
+            <div class="tutorial-sidebar-section">进阶功能</div>
+            <div class="tutorial-sidebar-item" data-target="ch-series"><span class="t-icon">📺</span>剧集与私享影院</div>
+            <div class="tutorial-sidebar-item" data-target="ch-favorite"><span class="t-icon">❤️</span>收藏历史与人物</div>
+            <div class="tutorial-sidebar-item" data-target="ch-lan"><span class="t-icon">📶</span>局域网多端共享</div>
+            <div class="tutorial-sidebar-item" data-target="ch-gif"><span class="t-icon">🖼️</span>Gif卡片与多屏</div>
+            <div class="tutorial-sidebar-item" data-target="ch-search"><span class="t-icon">🔍</span>搜索功能</div>
+            <div class="tutorial-sidebar-section">设置与帮助</div>
+            <div class="tutorial-sidebar-item" data-target="ch-personal"><span class="t-icon">🎨</span>个性化与隐私</div>
+            <div class="tutorial-sidebar-item" data-target="ch-faq"><span class="t-icon">❓</span>常见问题</div>
+        </nav>
+
+        <!-- 内容区 -->
+        <div class="tutorial-content" id="tutorialContent">
+
+            <!-- 第1章：快速开始 -->
+            <section class="tutorial-chapter" id="ch-quickstart">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🚀</span>快速开始</h2>
+                <p class="tutorial-chapter-desc">四步开启你的智能影音管理之旅，从下载到使用只需几分钟。</p>
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">1</div>
+                        <div class="tutorial-step-content">
+                            <h4>下载安装</h4>
+                            <p>点击官网「立即下载」获取安装包，双击运行按提示完成安装。注意：安装路径不能包含中文字符。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">2</div>
+                        <div class="tutorial-step-content">
+                            <h4>激活软件</h4>
+                            <p>首次启动会弹出激活窗口，扫码添加客服获取注册码，输入机器码和注册码完成激活。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">3</div>
+                        <div class="tutorial-step-content">
+                            <h4>导入视频</h4>
+                            <p>进入「引力导入」页面，添加视频文件夹路径，点击「获取数据」扫描视频，再点击「发布」导入数据库。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">4</div>
+                        <div class="tutorial-step-content">
+                            <h4>享受管理</h4>
+                            <p>软件自动生成封面、预览帧，回到首页即可浏览视频库，鼠标悬停卡片体验25帧预览。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tutorial-callout tutorial-callout-info">
+                    <span class="tutorial-callout-icon">💡</span>
+                    <span class="tutorial-callout-text">导入后软件会进行封面生成、预览帧提取等后台计算，资源占用较高，建议在空闲时间运行。缓存完成后占用会大幅降低。</span>
+                </div>
+            </section>
+
+            <!-- 第2章：安装与激活 -->
+            <section class="tutorial-chapter" id="ch-install">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">📦</span>安装与激活</h2>
+                <p class="tutorial-chapter-desc">详细的安装步骤和激活流程说明。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">💻</div>
+                        <h4>系统要求</h4>
+                        <p>Windows 10/11 64位，4核以上 CPU，8GB 以上内存，12GB 可用存储空间。</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📁</div>
+                        <h4>路径要求</h4>
+                        <p>安装目录路径不能包含中文字符，否则可能导致功能异常。</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔧</div>
+                        <h4>运行库</h4>
+                        <p>如遇运行问题，请先安装 VC_redist.x64 运行库。</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-collapsible open">
+                    <div class="tutorial-collapsible-header">
+                        <span class="tutorial-collapsible-title">📥 安装步骤详解</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-collapsible-body">
+                        <div class="tutorial-collapsible-content">
+                            <p>1. 从官网下载软件安装包（约 1.5GB）</p>
+                            <p>2. 解压到非中文路径目录（如 D:\YingMoFang）</p>
+                            <p>3. 如遇运行问题，先安装 VC_redist.x64-14.38.33135.exe 运行库</p>
+                            <p>4. 双击「影魔方.exe」启动软件</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-collapsible">
+                    <div class="tutorial-collapsible-header">
+                        <span class="tutorial-collapsible-title">🔑 注册激活流程</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-collapsible-body">
+                        <div class="tutorial-collapsible-content">
+                            <p>1. 软件首次启动会显示「获取注册码」提示</p>
+                            <p>2. 点击「获取注册码」按钮查看购买信息</p>
+                            <p>3. 扫码添加客服微信，购买后获得注册码</p>
+                            <p>4. 在弹出界面中输入注册码，点击「确定」完成激活</p>
+                            <ul>
+                                <li>一台电脑一个注册码，绑定硬件</li>
+                                <li>重装系统后点击购买不会重复扣费</li>
+                                <li>更换硬件凭付款记录可免费换 2 次</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-warning">
+                    <span class="tutorial-callout-icon">⚠️</span>
+                    <span class="tutorial-callout-text">注册码与电脑硬件绑定，请妥善保管付款记录。重装系统不会消耗换机次数，但更换硬件会消耗。</span>
+                </div>
+            </section>
+
+            <!-- 第3章：基础配置与AI -->
+            <section class="tutorial-chapter" id="ch-config">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">⚙️</span>基础配置与AI设置</h2>
+                <p class="tutorial-chapter-desc">配置端口、密码、AI 大模型等核心参数，让软件功能完整运作。</p>
+
+                <h4 style="color:#fff;margin-bottom:12px;">🔧 基本配置项</h4>
+                <table class="tutorial-table">
+                    <thead>
+                        <tr><th>配置项</th><th>说明</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>API 端口</td><td>后端接口服务端口，桌面端与网页端通信使用，默认值通常无需修改</td></tr>
+                        <tr><td>网页端口</td><td>浏览器访问端口，用于本机或局域网页面访问</td></tr>
+                        <tr><td>软件密码</td><td>设置后启动软件和从最小化恢复时需输入密码</td></tr>
+                        <tr><td>人脸识别</td><td>视频演员识别总开关，关闭后相关任务不生效</td></tr>
+                        <tr><td>视频截图数量</td><td>演员识别时单个视频最多截取的画面数</td></tr>
+                        <tr><td>视频帧数</td><td>视觉模型分类时抽取的视频帧数</td></tr>
+                    </tbody>
+                </table>
+
+                <h4 style="color:#fff;margin:24px 0 12px;">🤖 AI 大模型配置</h4>
+                <p style="color:#9ca3af;font-size:0.9rem;margin-bottom:16px;">影魔方支持接入外部 AI API 实现智能分类、标签生成、视觉分析等功能。推荐使用「快速配置」一键完成。</p>
+
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">1</div>
+                        <div class="tutorial-step-content">
+                            <h4>选择供应商模板</h4>
+                            <p>在「星云配置」→「AI大模型配置」中选择供应商模板（推荐硅基流动，新用户有免费额度）。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">2</div>
+                        <div class="tutorial-step-content">
+                            <h4>填写 API Key</h4>
+                            <p>在对应平台后台创建密钥，复制粘贴到「API Key」输入框。本地服务（LMStudio、Ollama）可留空。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">3</div>
+                        <div class="tutorial-step-content">
+                            <h4>一键配置</h4>
+                            <p>点击「一键配置」自动创建供应商、添加语言/视觉模型，并选为「当前使用模型」。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">4</div>
+                        <div class="tutorial-step-content">
+                            <h4>测试连接</h4>
+                            <p>可选：点击「测试连接」验证接口地址和 API Key 是否可用，成功会显示可用模型数。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-collapsible">
+                    <div class="tutorial-collapsible-header">
+                        <span class="tutorial-collapsible-title">📋 支持的供应商模板</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-collapsible-body">
+                        <div class="tutorial-collapsible-content">
+                            <table class="tutorial-table">
+                                <thead><tr><th>模板</th><th>接口地址</th><th>默认模型</th></tr></thead>
+                                <tbody>
+                                    <tr><td>DeepSeek</td><td>api.deepseek.com/v1</td><td>deepseek-chat</td></tr>
+                                    <tr><td>OpenAI</td><td>api.openai.com/v1</td><td>gpt-4o-mini</td></tr>
+                                    <tr><td>硅基流动</td><td>api.siliconflow.cn/v1</td><td>DeepSeek-V3.2</td></tr>
+                                    <tr><td>智谱AI</td><td>open.bigmodel.cn/api/paas/v4</td><td>glm-4-flash</td></tr>
+                                    <tr><td>Moonshot</td><td>api.moonshot.cn/v1</td><td>moonshot-v1-8k</td></tr>
+                                    <tr><td>通义千问</td><td>dashscope.aliyuncs.com/compatible-mode/v1</td><td>qwen-plus</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-tip">
+                    <span class="tutorial-callout-icon">✅</span>
+                    <span class="tutorial-callout-text">最小方案：只配语言模型也能用！只想体验 AI 自动标签和翻译，选好模板填 API Key，视觉模型留空，点击一键配置即可。</span>
+                </div>
+                <div class="tutorial-callout tutorial-callout-warning">
+                    <span class="tutorial-callout-icon">⚠️</span>
+                    <span class="tutorial-callout-text">忘记密码？删除软件运行目录下的 <span class="tutorial-shortcut">pwd</span> 文件后重启软件即可重置。</span>
+                </div>
+            </section>
+
+            <!-- 第4章：视频库管理 -->
+            <section class="tutorial-chapter" id="ch-video">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🎬</span>视频库管理</h2>
+                <p class="tutorial-chapter-desc">导入、管理、整理你的视频文件，支持多种主流格式和批量操作。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📹</div>
+                        <h4>格式支持</h4>
+                        <p>MP4、AVI、MKV、MOV、WMV、FLV 等 50+ 主流视频格式</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📁</div>
+                        <h4>多根目录</h4>
+                        <p>支持添加多个视频库目录，跨盘管理视频文件</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">⚡</div>
+                        <h4>增量扫描</h4>
+                        <p>自动过滤已删除视频，二次启动毫秒级加载</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔒</div>
+                        <h4>文件隐藏</h4>
+                        <p>可将视频重命名为 .dat 并隐藏，保护隐私</p>
+                    </div>
+                </div>
+
+                <h4 style="color:#fff;margin:24px 0 12px;">📥 导入视频步骤</h4>
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">1</div>
+                        <div class="tutorial-step-content">
+                            <h4>进入导入页面</h4>
+                            <p>左侧导航点击「引力导入」，在「添加视频文件夹」卡片中操作。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">2</div>
+                        <div class="tutorial-step-content">
+                            <h4>填写路径</h4>
+                            <p>在「文件夹」输入框填写视频文件夹路径（如 F:\video），点击「获取数据」加载文件列表。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">3</div>
+                        <div class="tutorial-step-content">
+                            <h4>配置选项</h4>
+                            <p>根据需要开启：隐藏视频文件、标题包含文件夹名、文件自动重命名、跳过最小文件等选项。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">4</div>
+                        <div class="tutorial-step-content">
+                            <h4>发布导入</h4>
+                            <p>点击「发布」将视频导入数据库，过程显示进度条和日志。导入后自动触发封面生成等任务。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-collapsible">
+                    <div class="tutorial-collapsible-header">
+                        <span class="tutorial-collapsible-title">⚙️ 导入选项详解</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-collapsible-body">
+                        <div class="tutorial-collapsible-content">
+                            <ul>
+                                <li><strong style="color:#c084fc;">隐藏视频文件：</strong>将视频重命名为随机 .dat 文件并隐藏，备份原始信息，保护隐私</li>
+                                <li><strong style="color:#c084fc;">标题包含文件夹名：</strong>视频标题包含子文件夹名（如 c:/蜡笔小新/1.mp4 → "蜡笔小新_1"）</li>
+                                <li><strong style="color:#c084fc;">文件自动重命名：</strong>自动替换文件名中的禁止字符（如 ! * ' 等）为 "-"</li>
+                                <li><strong style="color:#c084fc;">跳过最小文件：</strong>设置最小文件大小（默认 1MB），小于此值的文件跳过</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-info">
+                    <span class="tutorial-callout-icon">💡</span>
+                    <span class="tutorial-callout-text">右键视频卡片可弹出操作菜单：本地播放器、添加收藏、移动到分组、编辑标签、选择封面、删除等。删除视频会自动还原隐藏的文件名。</span>
+                </div>
+            </section>
+
+            <!-- 第5章：智能标签与分类 -->
+            <section class="tutorial-chapter" id="ch-tags">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🏷️</span>智能标签与分类</h2>
+                <p class="tutorial-chapter-desc">AI 驱动的自动分类和标签生成，让视频整理变得轻松简单。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🤖</div>
+                        <h4>AI 自动分类</h4>
+                        <p>根据视频文件名自动匹配最合适的分类，需先创建分类列表</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">👁️</div>
+                        <h4>视觉分类</h4>
+                        <p>文件名无意义时，AI 分析视频截图智能判断内容分类</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🏷️</div>
+                        <h4>多标签关联</h4>
+                        <p>支持多标签关联、标签统计、智能筛选，多维度管理</p>
+                    </div>
+                </div>
+
+                <h4 style="color:#fff;margin:24px 0 12px;">📋 使用流程</h4>
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">1</div>
+                        <div class="tutorial-step-content">
+                            <h4>创建分类</h4>
+                            <p>进入「分类管理」页面，点击「添加分类」，输入名称（如动作片、喜剧），选择类型后创建。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">2</div>
+                        <div class="tutorial-step-content">
+                            <h4>开启 AI 任务</h4>
+                            <p>在「星云配置」→「任务配置」中开启「自动生成 tag 和分类」，保存配置。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">3</div>
+                        <div class="tutorial-step-content">
+                            <h4>等待处理</h4>
+                            <p>导入视频后软件自动调用 AI 生成标签和分类，可在主页查看任务状态。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-warning">
+                    <span class="tutorial-callout-icon">⚠️</span>
+                    <span class="tutorial-callout-text">必须先创建分类！AI 任务会读取分类列表匹配。如果没有分类，AI 无法生成分类。AI 分类基于文件名匹配，无意义名称（如 MD5）需开启视觉分类。</span>
+                </div>
+                <div class="tutorial-callout tutorial-callout-warning">
+                    <span class="tutorial-callout-icon">⚠️</span>
+                    <span class="tutorial-callout-text">刮削元数据和自动生成 tag/分类不能同时运行，可能造成数据覆盖。建议先运行刮削完成，再开启 AI 生成。</span>
+                </div>
+            </section>
+
+            <!-- 第6章：25帧悬停预览 -->
+            <section class="tutorial-chapter" id="ch-preview">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🖱️</span>25帧悬停预览</h2>
+                <p class="tutorial-chapter-desc">影魔方招牌功能：鼠标在卡片上左右滑动，实时切换 25 帧预览画面，无需播放即可快速浏览。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">⚡</div>
+                        <h4>GPU 加速</h4>
+                        <p>利用 GPU 硬件加速，毫秒级响应，流畅无卡顿</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎯</div>
+                        <h4>精准定位</h4>
+                        <p>鼠标位置对应视频进度，实时显示百分比</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">💾</div>
+                        <h4>智能缓存</h4>
+                        <p>预览帧自动缓存，二次浏览秒级加载</p>
+                    </div>
+                </div>
+
+                <h4 style="color:#fff;margin:24px 0 12px;">🖱️ 操作方式</h4>
+                <table class="tutorial-table">
+                    <thead><tr><th>操作</th><th>效果</th></tr></thead>
+                    <tbody>
+                        <tr><td>鼠标悬停卡片</td><td>显示预览帧和进度指示器</td></tr>
+                        <tr><td>鼠标左右移动</td><td>切换不同时间点的预览帧</td></tr>
+                        <tr><td>鼠标移出卡片</td><td>恢复显示视频封面</td></tr>
+                        <tr><td>手机长按滑动</td><td>移动端同样支持预览帧切换</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="tutorial-callout tutorial-callout-tip">
+                    <span class="tutorial-callout-icon">✅</span>
+                    <span class="tutorial-callout-text">可以在官网首页「在线体验」区域直接试用这个功能，鼠标在卡片上水平移动即可看到效果。</span>
+                </div>
+            </section>
+
+            <!-- 第7章：HomeBuild 刮削器 -->
+            <section class="tutorial-chapter" id="ch-scraper">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🎭</span>HomeBuild 刮削器</h2>
+                <p class="tutorial-chapter-desc">内置专业刮削器，自动获取海报、剧情、演员、标签，生成完整 NFO 元数据。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎯</div>
+                        <h4>自动匹配</h4>
+                        <p>根据文件名自动匹配元数据，一键补全信息</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🌐</div>
+                        <h4>多源支持</h4>
+                        <p>支持 StashDB、JAVStash、PMV Stash 等第三方刮削器</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📝</div>
+                        <h4>NFO 生成</h4>
+                        <p>自动生成 NFO 元数据文件，让影库井井有条</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎬</div>
+                        <h4>电影刮削</h4>
+                        <p>支持电影元数据刮削，文件名需与真实片名一致</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-collapsible">
+                    <div class="tutorial-collapsible-header">
+                        <span class="tutorial-collapsible-title">⚙️ 刮削配置步骤</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-collapsible-body">
+                        <div class="tutorial-collapsible-content">
+                            <p>1. 进入「HomeBuild」页面或「星云配置」中的刮削设置</p>
+                            <p>2. 配置刮削器源（StashDB 等），填写 API Key</p>
+                            <p>3. 在任务配置中开启「刮削视频元数据」</p>
+                            <p>4. 保存配置后，导入视频会自动触发刮削</p>
+                            <p>5. 也可在视频列表手动对单个视频触发刮削</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-warning">
+                    <span class="tutorial-callout-icon">⚠️</span>
+                    <span class="tutorial-callout-text">电影刮削要求文件名与真实电影名称一致，例如「赎罪.mp4」。文件名不规范可能导致匹配失败。</span>
+                </div>
+                <div class="tutorial-callout tutorial-callout-info">
+                    <span class="tutorial-callout-icon">💡</span>
+                    <span class="tutorial-callout-text">刮削器支持翻译标题和标签，可自动将外文信息翻译为中文，方便阅读和管理。</span>
+                </div>
+            </section>
+
+            <!-- 第8章：剧集与私享影院 -->
+            <section class="tutorial-chapter" id="ch-series">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">📺</span>剧集与私享影院</h2>
+                <p class="tutorial-chapter-desc">管理电视剧剧集和私密收藏，打造专属观影空间。</p>
+
+                <h4 style="color:#fff;margin-bottom:12px;">📺 剧集管理</h4>
+                <p style="color:#9ca3af;font-size:0.9rem;margin-bottom:16px;">强大的剧集管理功能，支持季/集分类、连续播放、进度记忆。</p>
+
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">1</div>
+                        <div class="tutorial-step-content">
+                            <h4>添加剧集</h4>
+                            <p>在「引力导入」页面找到「添加剧集」卡片，输入根文件夹路径。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">2</div>
+                        <div class="tutorial-step-content">
+                            <h4>自动扫描</h4>
+                            <p>软件扫描所有子文件夹，以最底层包含视频的文件夹名作为剧集名。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">3</div>
+                        <div class="tutorial-step-content">
+                            <h4>连续播放</h4>
+                            <p>剧集页面支持连续播放和进度记忆，追剧更轻松。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-info">
+                    <span class="tutorial-callout-icon">💡</span>
+                    <span class="tutorial-callout-text">目录结构示例：根文件夹 → 海绵宝宝 → 第一集.mkv / 第二集.mkv。软件会自动识别「海绵宝宝」为剧集名。</span>
+                </div>
+
+                <h4 style="color:#fff;margin:32px 0 12px;">🎥 私享影院</h4>
+                <p style="color:#9ca3af;font-size:0.9rem;margin-bottom:16px;">专属私密观影空间，独立分类管理你的特殊收藏。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔒</div>
+                        <h4>独立空间</h4>
+                        <p>与主视频库分离，独立分类管理</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🛡️</div>
+                        <h4>隐私保护</h4>
+                        <p>支持文件隐藏，保护个人隐私</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎭</div>
+                        <h4>演员匹配</h4>
+                        <p>自动提取演员信息，支持女优库匹配</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第9章：收藏、历史与人物 -->
+            <section class="tutorial-chapter" id="ch-favorite">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">❤️</span>收藏、历史与人物</h2>
+                <p class="tutorial-chapter-desc">标记收藏、记录播放历史、管理演员信息，打造个人影音档案。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">❤️</div>
+                        <h4>收藏夹</h4>
+                        <p>标记收藏视频，支持按收藏排序，热门视频自动置顶</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📊</div>
+                        <h4>播放历史</h4>
+                        <p>记录播放次数，支持按播放次数排序，追踪观看记录</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎭</div>
+                        <h4>人物收藏</h4>
+                        <p>自动提取演员信息，支持收藏标记、热度排行</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔍</div>
+                        <h4>演员作品</h4>
+                        <p>一键查看该演员所有作品，方便追星</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-collapsible">
+                    <div class="tutorial-collapsible-header">
+                        <span class="tutorial-collapsible-title">🎭 人物收藏详解</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-collapsible-body">
+                        <div class="tutorial-collapsible-content">
+                            <ul>
+                                <li>自动从视频中提取演员人脸信息</li>
+                                <li>支持女优库匹配，自动补全演员资料</li>
+                                <li>可手动收藏喜欢的演员</li>
+                                <li>热度排行展示最常出现的演员</li>
+                                <li>点击演员卡片查看其所有作品</li>
+                                <li>支持批量导入演员信息</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第10章：局域网多端共享 -->
+            <section class="tutorial-chapter" id="ch-lan">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">📶</span>局域网多端共享</h2>
+                <p class="tutorial-chapter-desc">内置 Web 服务器，手机/平板/电视直接访问，家庭影院即刻搭建。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📱</div>
+                        <h4>多端访问</h4>
+                        <p>手机、平板、电视、电脑浏览器均可访问</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔒</div>
+                        <h4>密码保护</h4>
+                        <p>支持设置网页访问密码，防止未授权访问</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📱</div>
+                        <h4>移动优化</h4>
+                        <p>两列瀑布流布局，长按滑动预览，手机也能流畅管理</p>
+                    </div>
+                </div>
+
+                <h4 style="color:#fff;margin:24px 0 12px;">📶 使用步骤</h4>
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">1</div>
+                        <div class="tutorial-step-content">
+                            <h4>确认端口</h4>
+                            <p>在「星云配置」中查看「网页端口」设置（默认值通常无需修改）。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">2</div>
+                        <div class="tutorial-step-content">
+                            <h4>获取 IP</h4>
+                            <p>查看本机局域网 IP 地址（如 192.168.1.100）。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">3</div>
+                        <div class="tutorial-step-content">
+                            <h4>手机访问</h4>
+                            <p>手机浏览器输入 http://本机IP:网页端口，即可访问影库。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">4</div>
+                        <div class="tutorial-step-content">
+                            <h4>设置密码</h4>
+                            <p>可选：在配置中设置网页访问密码，保护隐私。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-tip">
+                    <span class="tutorial-callout-icon">✅</span>
+                    <span class="tutorial-callout-text">手机端支持长按视频卡片滑动预览，与电脑端体验一致。还支持 WebDAV 挂载，方便外部播放器接入。</span>
+                </div>
+            </section>
+
+            <!-- 第11章：Gif卡片与多屏 -->
+            <section class="tutorial-chapter" id="ch-gif">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🖼️</span>Gif卡片与多屏播放</h2>
+                <p class="tutorial-chapter-desc">制作精彩 Gif 动图，多屏对比播放，提升观影体验。</p>
+
+                <h4 style="color:#fff;margin-bottom:12px;">🖼️ Gif 卡片制作</h4>
+                <p style="color:#9ca3af;font-size:0.9rem;margin-bottom:16px;">从视频中截取精彩片段制作 Gif 动图，轻松分享精彩瞬间。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">✂️</div>
+                        <h4>自定义截取</h4>
+                        <p>自由选择起始时间和截取时长</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📐</div>
+                        <h4>尺寸调整</h4>
+                        <p>支持自定义输出尺寸和分辨率</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">⚡</div>
+                        <h4>帧率控制</h4>
+                        <p>可调节帧率，平衡文件大小和流畅度</p>
+                    </div>
+                </div>
+
+                <h4 style="color:#fff;margin:32px 0 12px;">🖥️ 多屏播放</h4>
+                <p style="color:#9ca3af;font-size:0.9rem;margin-bottom:16px;">同时播放多个视频，支持 2/4 分屏对比观看。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📊</div>
+                        <h4>2 分屏</h4>
+                        <p>左右分屏对比两个视频</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔲</div>
+                        <h4>4 分屏</h4>
+                        <p>四宫格同时播放四个视频</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎯</div>
+                        <h4>对比挑选</h4>
+                        <p>方便对比不同版本，挑选最佳</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第12章：搜索功能 -->
+            <section class="tutorial-chapter" id="ch-search">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🔍</span>搜索功能</h2>
+                <p class="tutorial-chapter-desc">番号搜索、AI 识图搜番，多种方式快速找到目标视频。</p>
+
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔍</div>
+                        <h4>番号搜索</h4>
+                        <p>输入番号快速搜索元数据，一键获取封面、标题、演员、标签</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📷</div>
+                        <h4>AI 识图搜番</h4>
+                        <p>上传视频截图或粘贴图片，AI 智能识别番号</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">⚡</div>
+                        <h4>快速定位</h4>
+                        <p>告别找不到资源的烦恼，快速找到视频来源</p>
+                    </div>
+                </div>
+
+                <h4 style="color:#fff;margin:24px 0 12px;">📷 AI 识图搜番使用</h4>
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">1</div>
+                        <div class="tutorial-step-content">
+                            <h4>准备截图</h4>
+                            <p>从视频中截取一张清晰画面，或准备一张视频截图。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">2</div>
+                        <div class="tutorial-step-content">
+                            <h4>上传图片</h4>
+                            <p>在搜索页面点击「AI 识图」按钮，上传或粘贴图片。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">3</div>
+                        <div class="tutorial-step-content">
+                            <h4>AI 识别</h4>
+                            <p>AI 分析图片内容，返回可能的番号和相关信息。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-info">
+                    <span class="tutorial-callout-icon">💡</span>
+                    <span class="tutorial-callout-text">AI 识图需要配置视觉模型才能使用。在「星云配置」→「AI大模型配置」中添加视觉模型并选为当前使用。</span>
+                </div>
+            </section>
+
+            <!-- 第13章：个性化与隐私 -->
+            <section class="tutorial-chapter" id="ch-personal">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🎨</span>个性化与隐私</h2>
+                <p class="tutorial-chapter-desc">打造专属视觉风格，全方位保护你的隐私安全。</p>
+
+                <h4 style="color:#fff;margin-bottom:12px;">🎨 个性化设置</h4>
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🌙</div>
+                        <h4>暗色/亮色主题</h4>
+                        <p>支持暗色/亮色主题切换（贤者时间模式）</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎨</div>
+                        <h4>主题颜色</h4>
+                        <p>自定义主题颜色，打造专属视觉风格</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">💎</div>
+                        <h4>透明度调节</h4>
+                        <p>卡片透明度、侧边栏透明度自由调节</p>
+                    </div>
+                </div>
+
+                <h4 style="color:#fff;margin:32px 0 12px;">🛡️ 隐私保护</h4>
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔒</div>
+                        <h4>本地运行</h4>
+                        <p>完全本地运行，无需联网，数据安全有保障</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📁</div>
+                        <h4>文件隐藏</h4>
+                        <p>视频文件重命名为 .dat 并隐藏，文件管理器不可见</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔑</div>
+                        <h4>软件密码</h4>
+                        <p>启动软件和恢复窗口时需输入密码</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🌐</div>
+                        <h4>网页密码</h4>
+                        <p>局域网访问可设置密码保护</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-tip">
+                    <span class="tutorial-callout-icon">✅</span>
+                    <span class="tutorial-callout-text">软件不收集任何用户信息，所有数据存储在本地。隐藏文件后，软件仍可正常播放，移除文件夹时会自动还原文件名。</span>
+                </div>
+            </section>
+
+            <!-- 第14章：常见问题 -->
+            <section class="tutorial-chapter" id="ch-faq">
+                <h2 class="tutorial-chapter-title"><span class="t-icon">❓</span>常见问题</h2>
+                <p class="tutorial-chapter-desc">使用过程中可能遇到的问题和解决方案。</p>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>如何获取注册码？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        扫码添加客服微信购买后获取。注册码与电脑硬件绑定，一台电脑一个注册码。首次启动点击「获取注册码」按钮查看购买信息。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>重装系统后注册码还能用吗？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        可以。重装系统后只要硬件没更换，点击购买不会扣款，会生成新的注册码。如果硬件更换，凭付款记录可免费换 2 次注册码。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>软件支持哪些操作系统？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        支持 Windows 10/11 64 位系统。需要 4 核以上 CPU、8GB 以上内存，建议 12GB 以上可用存储空间。支持 NVIDIA GPU 可开启 AI 加速（可选）。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>如何配置 AI 功能？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        在「星云配置」→「AI大模型配置」中使用快速配置。推荐硅基流动平台（新用户有免费额度）。选择模板 → 填写 API Key → 点击一键配置即可。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>导入视频后资源占用很高怎么办？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        导入后软件会进行封面生成、预览帧提取、人脸识别等计算，资源占用较高属正常现象。建议在空闲时间运行，缓存完成后占用会大幅降低。也可在主页右侧任务面板暂停所有后台任务。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>忘记软件密码怎么办？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        删除软件运行目录下的 <span class="tutorial-shortcut">pwd</span> 文件后重新启动软件，即可重置密码。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>AI 分类没有生效？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        请检查：1) 是否已创建分类列表（必须先创建分类）；2) 是否在任务配置中开启了「自动生成 tag 和分类」；3) 是否已选择「当前使用模型」；4) 视频文件名是否有意义（无意义名称需开启视觉分类）。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>刮削和 AI 生成能同时运行吗？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        不能同时运行，可能造成数据覆盖（AI 生成的 tag 会覆盖刮削结果）。建议先运行「刮削视频元数据」完成，再开启「自动生成 tag 和分类」。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>手机访问局域网页面打不开？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        请检查：1) 手机和电脑是否在同一局域网；2) 电脑防火墙是否放行网页端口；3) 访问地址是否正确（http://电脑IP:网页端口）；4) 网页端口是否被占用。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>支持哪些支付方式？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        目前支持支付宝。购买后即可获得永久授权，终身免费更新。如有其他支付需求，可联系客服咨询。
+                    </div>
+                </div>
+
+                <div class="tutorial-callout tutorial-callout-info" style="margin-top:24px;">
+                    <span class="tutorial-callout-icon">💬</span>
+                    <span class="tutorial-callout-text">还有其他问题？扫码添加客服微信获取一对一帮助，或访问官网「获取软件」区域联系客服。</span>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</aside>
+
 <script>
     // 页面加载动画
     window.addEventListener('load', () => {
@@ -2792,6 +3875,105 @@
         link.addEventListener('click', () => {
             mobileMenuBtn.classList.remove('active');
             mobileMenu.classList.remove('active');
+        });
+    });
+
+    // ============ 使用教程抽屉面板 ============
+    const tutorialBtn = document.getElementById('tutorialBtn');
+    const tutorialBtnMobile = document.getElementById('tutorialBtnMobile');
+    const tutorialDrawer = document.getElementById('tutorialDrawer');
+    const tutorialBackdrop = document.getElementById('tutorialBackdrop');
+    const tutorialClose = document.getElementById('tutorialClose');
+    const tutorialContent = document.getElementById('tutorialContent');
+    const tutorialSidebar = document.getElementById('tutorialSidebar');
+    const sidebarItems = tutorialSidebar.querySelectorAll('.tutorial-sidebar-item');
+    const chapters = tutorialContent.querySelectorAll('.tutorial-chapter');
+
+    // 打开教程
+    function openTutorial() {
+        tutorialDrawer.classList.add('open');
+        tutorialBackdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // 关闭移动端菜单
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        // 重置到顶部
+        tutorialContent.scrollTop = 0;
+        updateActiveSidebar();
+    }
+
+    // 关闭教程
+    function closeTutorial() {
+        tutorialDrawer.classList.remove('open');
+        tutorialBackdrop.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    tutorialBtn.addEventListener('click', openTutorial);
+    if (tutorialBtnMobile) {
+        tutorialBtnMobile.addEventListener('click', openTutorial);
+    }
+    tutorialClose.addEventListener('click', closeTutorial);
+    tutorialBackdrop.addEventListener('click', closeTutorial);
+
+    // ESC 键关闭
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && tutorialDrawer.classList.contains('open')) {
+            closeTutorial();
+        }
+    });
+
+    // 侧边栏点击跳转
+    sidebarItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const targetId = item.getAttribute('data-target');
+            const target = document.getElementById(targetId);
+            if (target) {
+                tutorialContent.scrollTo({
+                    top: target.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // 滚动时更新侧边栏激活项
+    function updateActiveSidebar() {
+        const scrollTop = tutorialContent.scrollTop;
+        let currentId = chapters[0].id;
+        chapters.forEach(ch => {
+            if (ch.offsetTop - 80 <= scrollTop) {
+                currentId = ch.id;
+            }
+        });
+        sidebarItems.forEach(item => {
+            item.classList.toggle('active', item.getAttribute('data-target') === currentId);
+        });
+        // 滚动侧边栏到激活项
+        const activeItem = tutorialSidebar.querySelector('.tutorial-sidebar-item.active');
+        if (activeItem) {
+            const sidebarRect = tutorialSidebar.getBoundingClientRect();
+            const itemRect = activeItem.getBoundingClientRect();
+            if (itemRect.top < sidebarRect.top || itemRect.bottom > sidebarRect.bottom) {
+                activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+        }
+    }
+
+    tutorialContent.addEventListener('scroll', updateActiveSidebar);
+
+    // 折叠面板交互
+    document.querySelectorAll('.tutorial-collapsible-header').forEach(header => {
+        header.addEventListener('click', () => {
+            header.parentElement.classList.toggle('open');
+        });
+    });
+
+    // FAQ 交互
+    document.querySelectorAll('.tutorial-faq-item').forEach(item => {
+        const q = item.querySelector('.tutorial-faq-q');
+        q.addEventListener('click', () => {
+            item.classList.toggle('open');
         });
     });
 
@@ -2939,33 +4121,6 @@
     }
 
     fetchLatestRelease();
-
-    // 滚动渐入动画
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // 平滑滚动到锚点（带导航栏偏移）
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            const target = document.querySelector(targetId);
-            if (target) {
-                e.preventDefault();
-                const navHeight = 70;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-            }
-        });
-    });
 </script>
 </body>
 </html>
