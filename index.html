@@ -2969,10 +2969,10 @@
             <div class="tutorial-sidebar-section">入门</div>
             <div class="tutorial-sidebar-item active" data-target="ch-quickstart"><span class="t-icon">🚀</span>快速开始</div>
             <div class="tutorial-sidebar-item" data-target="ch-install"><span class="t-icon">📦</span>安装与激活</div>
-            <div class="tutorial-sidebar-item" data-target="ch-config"><span class="t-icon">⚙️</span>基础配置与AI</div>
+            <div class="tutorial-sidebar-item" data-target="ch-config"><span class="t-icon">⚙️</span>基础配置</div>
             <div class="tutorial-sidebar-section">视频管理</div>
             <div class="tutorial-sidebar-item" data-target="ch-video"><span class="t-icon">🎬</span>视频库管理</div>
-            <div class="tutorial-sidebar-item" data-target="ch-tags"><span class="t-icon">🏷️</span>智能标签分类</div>
+            <div class="tutorial-sidebar-item" data-target="ch-tags"><span class="t-icon">🏷️</span>标签与分类</div>
             <div class="tutorial-sidebar-item" data-target="ch-preview"><span class="t-icon">🖱️</span>25帧悬停预览</div>
             <div class="tutorial-sidebar-item" data-target="ch-scraper"><span class="t-icon">🎭</span>HomeBuild 刮削器</div>
             <div class="tutorial-sidebar-section">进阶功能</div>
@@ -2980,7 +2980,7 @@
             <div class="tutorial-sidebar-item" data-target="ch-favorite"><span class="t-icon">❤️</span>收藏历史与人物</div>
             <div class="tutorial-sidebar-item" data-target="ch-lan"><span class="t-icon">📶</span>局域网多端共享</div>
             <div class="tutorial-sidebar-item" data-target="ch-gif"><span class="t-icon">🖼️</span>Gif卡片与多屏</div>
-            <div class="tutorial-sidebar-item" data-target="ch-search"><span class="t-icon">🔍</span>搜索功能</div>
+            <div class="tutorial-sidebar-item" data-target="ch-search"><span class="t-icon">🔍</span>番号与识图搜索</div>
             <div class="tutorial-sidebar-section">设置与帮助</div>
             <div class="tutorial-sidebar-item" data-target="ch-personal"><span class="t-icon">🎨</span>个性化与隐私</div>
             <div class="tutorial-sidebar-item" data-target="ch-faq"><span class="t-icon">❓</span>常见问题</div>
@@ -3093,89 +3093,59 @@
                 </div>
             </section>
 
-            <!-- 第3章：基础配置与AI -->
+            <!-- 第3章：基础配置 -->
             <section class="tutorial-chapter" id="ch-config">
-                <h2 class="tutorial-chapter-title"><span class="t-icon">⚙️</span>基础配置与AI设置</h2>
-                <p class="tutorial-chapter-desc">配置端口、密码、AI 大模型等核心参数，让软件功能完整运作。</p>
+                <h2 class="tutorial-chapter-title"><span class="t-icon">⚙️</span>基础配置</h2>
+                <p class="tutorial-chapter-desc">在「星云配置」页面调整核心参数，让软件贴合你的使用习惯。</p>
 
-                <h4 style="color:#fff;margin-bottom:12px;">🔧 基本配置项</h4>
+                <h4 style="color:#fff;margin-bottom:12px;">🔧 核心配置项</h4>
                 <table class="tutorial-table">
                     <thead>
                         <tr><th>配置项</th><th>说明</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>API 端口</td><td>后端接口服务端口，桌面端与网页端通信使用，默认值通常无需修改</td></tr>
-                        <tr><td>网页端口</td><td>浏览器访问端口，用于本机或局域网页面访问</td></tr>
-                        <tr><td>软件密码</td><td>设置后启动软件和从最小化恢复时需输入密码</td></tr>
-                        <tr><td>人脸识别</td><td>视频演员识别总开关，关闭后相关任务不生效</td></tr>
-                        <tr><td>视频截图数量</td><td>演员识别时单个视频最多截取的画面数</td></tr>
-                        <tr><td>视频帧数</td><td>视觉模型分类时抽取的视频帧数</td></tr>
+                        <tr><td>并发线程数</td><td>控制预览帧生成、刮削等后台任务的并发数，数值越大处理越快但占用越高</td></tr>
+                        <tr><td>预览帧数量</td><td>每个视频生成的悬停预览帧数，默认 25 帧，影响鼠标悬停体验</td></tr>
+                        <tr><td>本地播放器</td><td>配置外部播放器路径，右键视频可选择用本地播放器打开</td></tr>
+                        <tr><td>移动端访问</td><td>查看本机局域网 IP 和端口，手机浏览器访问影库</td></tr>
+                        <tr><td>根目录管理</td><td>添加、删除视频库根目录，支持多目录跨盘管理</td></tr>
+                        <tr><td>GPU 加速</td><td>开启后 FFmpeg 使用 GPU 硬件加速生成预览帧，大幅提升速度</td></tr>
+                        <tr><td>数据文件夹</td><td>选择数据存储位置（数据库、预览图、缓存等）</td></tr>
+                        <tr><td>快捷键设置</td><td>自定义播放、收藏、删除等常用操作的快捷键</td></tr>
+                        <tr><td>侧边栏名称</td><td>自定义侧边栏菜单项的显示名称</td></tr>
                     </tbody>
                 </table>
 
-                <h4 style="color:#fff;margin:24px 0 12px;">🤖 AI 大模型配置</h4>
-                <p style="color:#9ca3af;font-size:0.9rem;margin-bottom:16px;">影魔方支持接入外部 AI API 实现智能分类、标签生成、视觉分析等功能。推荐使用「快速配置」一键完成。</p>
-
-                <div class="tutorial-steps">
-                    <div class="tutorial-step">
-                        <div class="tutorial-step-num">1</div>
-                        <div class="tutorial-step-content">
-                            <h4>选择供应商模板</h4>
-                            <p>在「星云配置」→「AI大模型配置」中选择供应商模板（推荐硅基流动，新用户有免费额度）。</p>
-                        </div>
+                <div class="tutorial-cards">
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">💾</div>
+                        <h4>数据备份</h4>
+                        <p>一键备份数据库和配置，方便迁移或恢复</p>
                     </div>
-                    <div class="tutorial-step">
-                        <div class="tutorial-step-num">2</div>
-                        <div class="tutorial-step-content">
-                            <h4>填写 API Key</h4>
-                            <p>在对应平台后台创建密钥，复制粘贴到「API Key」输入框。本地服务（LMStudio、Ollama）可留空。</p>
-                        </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔄</div>
+                        <h4>数据导入</h4>
+                        <p>从备份文件恢复数据，换机无忧</p>
                     </div>
-                    <div class="tutorial-step">
-                        <div class="tutorial-step-num">3</div>
-                        <div class="tutorial-step-content">
-                            <h4>一键配置</h4>
-                            <p>点击「一键配置」自动创建供应商、添加语言/视觉模型，并选为「当前使用模型」。</p>
-                        </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🗑️</div>
+                        <h4>数据库重置</h4>
+                        <p>清空所有数据重新开始，谨慎操作</p>
                     </div>
-                    <div class="tutorial-step">
-                        <div class="tutorial-step-num">4</div>
-                        <div class="tutorial-step-content">
-                            <h4>测试连接</h4>
-                            <p>可选：点击「测试连接」验证接口地址和 API Key 是否可用，成功会显示可用模型数。</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tutorial-collapsible">
-                    <div class="tutorial-collapsible-header">
-                        <span class="tutorial-collapsible-title">📋 支持的供应商模板</span>
-                        <span class="tutorial-collapsible-arrow">▼</span>
-                    </div>
-                    <div class="tutorial-collapsible-body">
-                        <div class="tutorial-collapsible-content">
-                            <table class="tutorial-table">
-                                <thead><tr><th>模板</th><th>接口地址</th><th>默认模型</th></tr></thead>
-                                <tbody>
-                                    <tr><td>DeepSeek</td><td>api.deepseek.com/v1</td><td>deepseek-chat</td></tr>
-                                    <tr><td>OpenAI</td><td>api.openai.com/v1</td><td>gpt-4o-mini</td></tr>
-                                    <tr><td>硅基流动</td><td>api.siliconflow.cn/v1</td><td>DeepSeek-V3.2</td></tr>
-                                    <tr><td>智谱AI</td><td>open.bigmodel.cn/api/paas/v4</td><td>glm-4-flash</td></tr>
-                                    <tr><td>Moonshot</td><td>api.moonshot.cn/v1</td><td>moonshot-v1-8k</td></tr>
-                                    <tr><td>通义千问</td><td>dashscope.aliyuncs.com/compatible-mode/v1</td><td>qwen-plus</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">⬆️</div>
+                        <h4>软件更新</h4>
+                        <p>在线检查新版本，一键更新或本地安装包更新</p>
                     </div>
                 </div>
 
                 <div class="tutorial-callout tutorial-callout-tip">
                     <span class="tutorial-callout-icon">✅</span>
-                    <span class="tutorial-callout-text">最小方案：只配语言模型也能用！只想体验 AI 自动标签和翻译，选好模板填 API Key，视觉模型留空，点击一键配置即可。</span>
+                    <span class="tutorial-callout-text">GPU 加速是提升预览帧生成速度的关键。如果你的电脑有独立显卡（NVIDIA/AMD/Intel），建议在「星云配置」中开启 GPU 加速，可大幅缩短导入后的等待时间。</span>
                 </div>
-                <div class="tutorial-callout tutorial-callout-warning">
-                    <span class="tutorial-callout-icon">⚠️</span>
-                    <span class="tutorial-callout-text">忘记密码？删除软件运行目录下的 <span class="tutorial-shortcut">pwd</span> 文件后重启软件即可重置。</span>
+                <div class="tutorial-callout tutorial-callout-info">
+                    <span class="tutorial-callout-icon">💡</span>
+                    <span class="tutorial-callout-text">首次使用建议先配置：根目录管理（添加视频文件夹）→ GPU 加速（如有显卡）→ 预览帧数量（按需调整），然后前往「引力导入」开始扫描视频。</span>
                 </div>
             </section>
 
@@ -3262,61 +3232,73 @@
                 </div>
             </section>
 
-            <!-- 第5章：智能标签与分类 -->
+            <!-- 第5章：标签与分类 -->
             <section class="tutorial-chapter" id="ch-tags">
-                <h2 class="tutorial-chapter-title"><span class="t-icon">🏷️</span>智能标签与分类</h2>
-                <p class="tutorial-chapter-desc">AI 驱动的自动分类和标签生成，让视频整理变得轻松简单。</p>
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🏷️</span>标签与分类</h2>
+                <p class="tutorial-chapter-desc">手动管理标签和分类，或通过刮削器自动获取，多维度组织你的影库。</p>
 
                 <div class="tutorial-cards">
                     <div class="tutorial-card">
-                        <div class="tutorial-card-icon">🤖</div>
-                        <h4>AI 自动分类</h4>
-                        <p>根据视频文件名自动匹配最合适的分类，需先创建分类列表</p>
-                    </div>
-                    <div class="tutorial-card">
-                        <div class="tutorial-card-icon">👁️</div>
-                        <h4>视觉分类</h4>
-                        <p>文件名无意义时，AI 分析视频截图智能判断内容分类</p>
-                    </div>
-                    <div class="tutorial-card">
                         <div class="tutorial-card-icon">🏷️</div>
                         <h4>多标签关联</h4>
-                        <p>支持多标签关联、标签统计、智能筛选，多维度管理</p>
+                        <p>一个视频可关联多个标签，支持标签统计和智能筛选</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🔀</div>
+                        <h4>标签合并</h4>
+                        <p>合并重复标签，保持标签库整洁有序</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">📦</div>
+                        <h4>批量操作</h4>
+                        <p>批量给视频添加/移除标签、分类，高效管理</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-card-icon">🎭</div>
+                        <h4>刮削获取</h4>
+                        <p>使用 HomeBuild 刮削器自动获取标签和分类信息</p>
                     </div>
                 </div>
 
-                <h4 style="color:#fff;margin:24px 0 12px;">📋 使用流程</h4>
+                <h4 style="color:#fff;margin:24px 0 12px;">📋 标签管理操作</h4>
                 <div class="tutorial-steps">
                     <div class="tutorial-step">
                         <div class="tutorial-step-num">1</div>
                         <div class="tutorial-step-content">
                             <h4>创建分类</h4>
-                            <p>进入「分类管理」页面，点击「添加分类」，输入名称（如动作片、喜剧），选择类型后创建。</p>
+                            <p>在视频列表中右键卡片 → 选择「编辑标签」，或进入分类管理页面添加新分类（如动作片、喜剧）。</p>
                         </div>
                     </div>
                     <div class="tutorial-step">
                         <div class="tutorial-step-num">2</div>
                         <div class="tutorial-step-content">
-                            <h4>开启 AI 任务</h4>
-                            <p>在「星云配置」→「任务配置」中开启「自动生成 tag 和分类」，保存配置。</p>
+                            <h4>添加标签</h4>
+                            <p>右键视频卡片 → 编辑标签 → 输入标签名称（支持多个），保存即可关联到视频。</p>
                         </div>
                     </div>
                     <div class="tutorial-step">
                         <div class="tutorial-step-num">3</div>
                         <div class="tutorial-step-content">
-                            <h4>等待处理</h4>
-                            <p>导入视频后软件自动调用 AI 生成标签和分类，可在主页查看任务状态。</p>
+                            <h4>批量管理</h4>
+                            <p>在视频列表勾选多个视频 → 使用批量操作菜单，一次性添加标签或移动分类。</p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="tutorial-step-num">4</div>
+                        <div class="tutorial-step-content">
+                            <h4>刮削补全</h4>
+                            <p>前往「HomeBuild」页面，对视频执行刮削，自动获取标签、分类、演员等信息。</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="tutorial-callout tutorial-callout-warning">
-                    <span class="tutorial-callout-icon">⚠️</span>
-                    <span class="tutorial-callout-text">必须先创建分类！AI 任务会读取分类列表匹配。如果没有分类，AI 无法生成分类。AI 分类基于文件名匹配，无意义名称（如 MD5）需开启视觉分类。</span>
+                <div class="tutorial-callout tutorial-callout-info">
+                    <span class="tutorial-callout-icon">💡</span>
+                    <span class="tutorial-callout-text">导入视频时，如果文件夹名包含特定关键词（如"动漫"、"电影"），软件会自动将视频归入对应分类。可在配置中查看和修改关键词映射。</span>
                 </div>
-                <div class="tutorial-callout tutorial-callout-warning">
-                    <span class="tutorial-callout-icon">⚠️</span>
-                    <span class="tutorial-callout-text">刮削元数据和自动生成 tag/分类不能同时运行，可能造成数据覆盖。建议先运行刮削完成，再开启 AI 生成。</span>
+                <div class="tutorial-callout tutorial-callout-tip">
+                    <span class="tutorial-callout-icon">✅</span>
+                    <span class="tutorial-callout-text">标签和分类可以通过首页的筛选器快速过滤，善用标签能让你在海量视频中快速找到想看的内容。</span>
                 </div>
             </section>
 
@@ -3363,18 +3345,18 @@
             <!-- 第7章：HomeBuild 刮削器 -->
             <section class="tutorial-chapter" id="ch-scraper">
                 <h2 class="tutorial-chapter-title"><span class="t-icon">🎭</span>HomeBuild 刮削器</h2>
-                <p class="tutorial-chapter-desc">内置专业刮削器，自动获取海报、剧情、演员、标签，生成完整 NFO 元数据。</p>
+                <p class="tutorial-chapter-desc">内置自研刮削器，自动获取海报、剧情、演员、标签，生成完整 NFO 元数据。</p>
 
                 <div class="tutorial-cards">
                     <div class="tutorial-card">
                         <div class="tutorial-card-icon">🎯</div>
-                        <h4>自动匹配</h4>
-                        <p>根据文件名自动匹配元数据，一键补全信息</p>
+                        <h4>番号刮削</h4>
+                        <p>根据番号自动匹配元数据，获取封面、标题、演员、标签</p>
                     </div>
                     <div class="tutorial-card">
-                        <div class="tutorial-card-icon">🌐</div>
-                        <h4>多源支持</h4>
-                        <p>支持 StashDB、JAVStash、PMV Stash 等第三方刮削器</p>
+                        <div class="tutorial-card-icon">🎬</div>
+                        <h4>电影/剧集刮削</h4>
+                        <p>通过 TMDB 获取正经电影和剧集的元数据信息</p>
                     </div>
                     <div class="tutorial-card">
                         <div class="tutorial-card-icon">📝</div>
@@ -3382,11 +3364,23 @@
                         <p>自动生成 NFO 元数据文件，让影库井井有条</p>
                     </div>
                     <div class="tutorial-card">
-                        <div class="tutorial-card-icon">🎬</div>
-                        <h4>电影刮削</h4>
-                        <p>支持电影元数据刮削，文件名需与真实片名一致</p>
+                        <div class="tutorial-card-icon">👤</div>
+                        <h4>女优头像</h4>
+                        <p>独立任务刮削演员/女优头像信息，丰富人物库</p>
                     </div>
                 </div>
+
+                <h4 style="color:#fff;margin:24px 0 12px;">🌐 支持的刮削源</h4>
+                <table class="tutorial-table">
+                    <thead><tr><th>数据源</th><th>用途</th><th>说明</th></tr></thead>
+                    <tbody>
+                        <tr><td>JavBus</td><td>番号搜索</td><td>默认源，信息全面</td></tr>
+                        <tr><td>JavDB</td><td>番号搜索</td><td>备用源，评分信息丰富</td></tr>
+                        <tr><td>BusDMM</td><td>番号搜索</td><td>备用源，DMM 官方数据</td></tr>
+                        <tr><td>TMDB</td><td>电影/剧集</td><td>正经影视元数据，需配置 API Key</td></tr>
+                        <tr><td>XsList / MinnanoAV / DramaFace</td><td>女优信息</td><td>演员头像和资料刮削</td></tr>
+                    </tbody>
+                </table>
 
                 <div class="tutorial-collapsible">
                     <div class="tutorial-collapsible-header">
@@ -3395,22 +3389,23 @@
                     </div>
                     <div class="tutorial-collapsible-body">
                         <div class="tutorial-collapsible-content">
-                            <p>1. 进入「HomeBuild」页面或「星云配置」中的刮削设置</p>
-                            <p>2. 配置刮削器源（StashDB 等），填写 API Key</p>
-                            <p>3. 在任务配置中开启「刮削视频元数据」</p>
-                            <p>4. 保存配置后，导入视频会自动触发刮削</p>
-                            <p>5. 也可在视频列表手动对单个视频触发刮削</p>
+                            <p>1. 进入「HomeBuild」页面查看刮削配置</p>
+                            <p>2. 选择刮削源（javbus / busdmm / javdb / tmdb）</p>
+                            <p>3. 按需开启：下载封面、翻译标题、翻译标签、保存 NFO、重命名视频</p>
+                            <p>4. 如使用 TMDB 刮削电影/剧集，需填写 TMDB API Key</p>
+                            <p>5. 可选开启备用源，主源失败时自动切换</p>
+                            <p>6. 保存配置后，在视频列表右键单个视频触发刮削，或批量刮削</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="tutorial-callout tutorial-callout-warning">
                     <span class="tutorial-callout-icon">⚠️</span>
-                    <span class="tutorial-callout-text">电影刮削要求文件名与真实电影名称一致，例如「赎罪.mp4」。文件名不规范可能导致匹配失败。</span>
+                    <span class="tutorial-callout-text">电影/剧集刮削使用 TMDB 数据源，文件名需与真实片名一致（如「赎罪.mp4」），否则可能匹配失败。番号刮削则需文件名包含番号信息。</span>
                 </div>
                 <div class="tutorial-callout tutorial-callout-info">
                     <span class="tutorial-callout-icon">💡</span>
-                    <span class="tutorial-callout-text">刮削器支持翻译标题和标签，可自动将外文信息翻译为中文，方便阅读和管理。</span>
+                    <span class="tutorial-callout-text">刮削器支持翻译标题和标签，可自动将外文信息翻译为中文，方便阅读和管理。女优头像刮削是独立任务，可在配置中单独开启。</span>
                 </div>
             </section>
 
@@ -3533,9 +3528,9 @@
                         <p>手机、平板、电视、电脑浏览器均可访问</p>
                     </div>
                     <div class="tutorial-card">
-                        <div class="tutorial-card-icon">🔒</div>
-                        <h4>密码保护</h4>
-                        <p>支持设置网页访问密码，防止未授权访问</p>
+                        <div class="tutorial-card-icon">📁</div>
+                        <h4>WebDAV 支持</h4>
+                        <p>支持 WebDAV 挂载，方便外部播放器接入</p>
                     </div>
                     <div class="tutorial-card">
                         <div class="tutorial-card-icon">📱</div>
@@ -3570,8 +3565,8 @@
                     <div class="tutorial-step">
                         <div class="tutorial-step-num">4</div>
                         <div class="tutorial-step-content">
-                            <h4>设置密码</h4>
-                            <p>可选：在配置中设置网页访问密码，保护隐私。</p>
+                            <h4>WebDAV 挂载</h4>
+                            <p>可选：通过 WebDAV 协议挂载影库，方便外部播放器（如 Infuse、NPlayer）直接接入播放。</p>
                         </div>
                     </div>
                 </div>
@@ -3630,10 +3625,10 @@
                 </div>
             </section>
 
-            <!-- 第12章：搜索功能 -->
+            <!-- 第12章：番号与识图搜索 -->
             <section class="tutorial-chapter" id="ch-search">
-                <h2 class="tutorial-chapter-title"><span class="t-icon">🔍</span>搜索功能</h2>
-                <p class="tutorial-chapter-desc">番号搜索、AI 识图搜番，多种方式快速找到目标视频。</p>
+                <h2 class="tutorial-chapter-title"><span class="t-icon">🔍</span>番号与识图搜索</h2>
+                <p class="tutorial-chapter-desc">番号搜索、识图搜番，多种方式快速找到目标视频的来源信息。</p>
 
                 <div class="tutorial-cards">
                     <div class="tutorial-card">
@@ -3643,17 +3638,17 @@
                     </div>
                     <div class="tutorial-card">
                         <div class="tutorial-card-icon">📷</div>
-                        <h4>AI 识图搜番</h4>
-                        <p>上传视频截图或粘贴图片，AI 智能识别番号</p>
+                        <h4>识图搜番</h4>
+                        <p>上传视频截图，通过图片识别匹配番号，告别找不到来源的烦恼</p>
                     </div>
                     <div class="tutorial-card">
                         <div class="tutorial-card-icon">⚡</div>
                         <h4>快速定位</h4>
-                        <p>告别找不到资源的烦恼，快速找到视频来源</p>
+                        <p>不知道番号也能搜，一张截图帮你找到视频出处</p>
                     </div>
                 </div>
 
-                <h4 style="color:#fff;margin:24px 0 12px;">📷 AI 识图搜番使用</h4>
+                <h4 style="color:#fff;margin:24px 0 12px;">📷 识图搜番使用</h4>
                 <div class="tutorial-steps">
                     <div class="tutorial-step">
                         <div class="tutorial-step-num">1</div>
@@ -3666,21 +3661,21 @@
                         <div class="tutorial-step-num">2</div>
                         <div class="tutorial-step-content">
                             <h4>上传图片</h4>
-                            <p>在搜索页面点击「AI 识图」按钮，上传或粘贴图片。</p>
+                            <p>在「虚空工具」页面点击「识图搜番」按钮，上传或粘贴图片。</p>
                         </div>
                     </div>
                     <div class="tutorial-step">
                         <div class="tutorial-step-num">3</div>
                         <div class="tutorial-step-content">
-                            <h4>AI 识别</h4>
-                            <p>AI 分析图片内容，返回可能的番号和相关信息。</p>
+                            <h4>获取结果</h4>
+                            <p>软件通过图片识别服务匹配番号，返回可能的番号和相关信息。</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="tutorial-callout tutorial-callout-info">
                     <span class="tutorial-callout-icon">💡</span>
-                    <span class="tutorial-callout-text">AI 识图需要配置视觉模型才能使用。在「星云配置」→「AI大模型配置」中添加视觉模型并选为当前使用。</span>
+                    <span class="tutorial-callout-text">识图搜番功能在「虚空工具」页面中，无需额外配置即可使用。建议使用清晰、有特征的视频截图以提高识别准确率。</span>
                 </div>
             </section>
 
@@ -3721,14 +3716,14 @@
                         <p>视频文件重命名为 .dat 并隐藏，文件管理器不可见</p>
                     </div>
                     <div class="tutorial-card">
-                        <div class="tutorial-card-icon">🔑</div>
-                        <h4>软件密码</h4>
-                        <p>启动软件和恢复窗口时需输入密码</p>
+                        <div class="tutorial-card-icon">💾</div>
+                        <h4>数据备份</h4>
+                        <p>一键备份和恢复数据，换机迁移无忧</p>
                     </div>
                     <div class="tutorial-card">
-                        <div class="tutorial-card-icon">🌐</div>
-                        <h4>网页密码</h4>
-                        <p>局域网访问可设置密码保护</p>
+                        <div class="tutorial-card-icon">📊</div>
+                        <h4>观看统计</h4>
+                        <p>记录播放数据，了解你的观影习惯</p>
                     </div>
                 </div>
 
@@ -3769,17 +3764,7 @@
                         <span class="tutorial-collapsible-arrow">▼</span>
                     </div>
                     <div class="tutorial-faq-a">
-                        支持 Windows 10/11 64 位系统。需要 4 核以上 CPU、8GB 以上内存，建议 12GB 以上可用存储空间。支持 NVIDIA GPU 可开启 AI 加速（可选）。
-                    </div>
-                </div>
-
-                <div class="tutorial-faq-item">
-                    <div class="tutorial-faq-q">
-                        <span>如何配置 AI 功能？</span>
-                        <span class="tutorial-collapsible-arrow">▼</span>
-                    </div>
-                    <div class="tutorial-faq-a">
-                        在「星云配置」→「AI大模型配置」中使用快速配置。推荐硅基流动平台（新用户有免费额度）。选择模板 → 填写 API Key → 点击一键配置即可。
+                        支持 Windows 10/11 64 位系统。需要 4 核以上 CPU、8GB 以上内存，建议 12GB 以上可用存储空间。如有独立显卡可开启 GPU 加速提升预览帧生成速度。
                     </div>
                 </div>
 
@@ -3789,37 +3774,47 @@
                         <span class="tutorial-collapsible-arrow">▼</span>
                     </div>
                     <div class="tutorial-faq-a">
-                        导入后软件会进行封面生成、预览帧提取、人脸识别等计算，资源占用较高属正常现象。建议在空闲时间运行，缓存完成后占用会大幅降低。也可在主页右侧任务面板暂停所有后台任务。
+                        导入后软件会进行封面生成、预览帧提取等计算，资源占用较高属正常现象。建议在空闲时间运行，缓存完成后占用会大幅降低。如有显卡可在「星云配置」中开启 GPU 加速，也可在主页右侧任务面板暂停所有后台任务。
                     </div>
                 </div>
 
                 <div class="tutorial-faq-item">
                     <div class="tutorial-faq-q">
-                        <span>忘记软件密码怎么办？</span>
+                        <span>如何开启 GPU 加速？</span>
                         <span class="tutorial-collapsible-arrow">▼</span>
                     </div>
                     <div class="tutorial-faq-a">
-                        删除软件运行目录下的 <span class="tutorial-shortcut">pwd</span> 文件后重新启动软件，即可重置密码。
+                        进入「星云配置」页面，找到「GPU 加速」配置项并开启。支持 NVIDIA、AMD、Intel 显卡。开启后 FFmpeg 会使用硬件加速生成预览帧，大幅缩短导入后的等待时间。
                     </div>
                 </div>
 
                 <div class="tutorial-faq-item">
                     <div class="tutorial-faq-q">
-                        <span>AI 分类没有生效？</span>
+                        <span>如何备份数据？</span>
                         <span class="tutorial-collapsible-arrow">▼</span>
                     </div>
                     <div class="tutorial-faq-a">
-                        请检查：1) 是否已创建分类列表（必须先创建分类）；2) 是否在任务配置中开启了「自动生成 tag 和分类」；3) 是否已选择「当前使用模型」；4) 视频文件名是否有意义（无意义名称需开启视觉分类）。
+                        进入「星云配置」页面，找到「数据备份」功能，点击即可一键备份数据库和配置。换机时使用「数据导入」功能从备份文件恢复。
                     </div>
                 </div>
 
                 <div class="tutorial-faq-item">
                     <div class="tutorial-faq-q">
-                        <span>刮削和 AI 生成能同时运行吗？</span>
+                        <span>如何更新软件？</span>
                         <span class="tutorial-collapsible-arrow">▼</span>
                     </div>
                     <div class="tutorial-faq-a">
-                        不能同时运行，可能造成数据覆盖（AI 生成的 tag 会覆盖刮削结果）。建议先运行「刮削视频元数据」完成，再开启「自动生成 tag 和分类」。
+                        进入「星云配置」页面，找到「软件更新」功能，可在线检查新版本并一键更新，也可使用本地安装包更新。购买后终身免费更新。
+                    </div>
+                </div>
+
+                <div class="tutorial-faq-item">
+                    <div class="tutorial-faq-q">
+                        <span>刮削匹配失败怎么办？</span>
+                        <span class="tutorial-collapsible-arrow">▼</span>
+                    </div>
+                    <div class="tutorial-faq-a">
+                        请检查：1) 文件名是否包含正确的番号或片名；2) 尝试切换刮削源（javbus/javdb/busdmm）；3) 开启备用源，主源失败时自动切换；4) 电影/剧集刮削需文件名与真实片名一致，并配置 TMDB API Key。
                     </div>
                 </div>
 
@@ -3829,7 +3824,7 @@
                         <span class="tutorial-collapsible-arrow">▼</span>
                     </div>
                     <div class="tutorial-faq-a">
-                        请检查：1) 手机和电脑是否在同一局域网；2) 电脑防火墙是否放行网页端口；3) 访问地址是否正确（http://电脑IP:网页端口）；4) 网页端口是否被占用。
+                        请检查：1) 手机和电脑是否在同一局域网；2) 电脑防火墙是否放行端口；3) 访问地址是否正确（http://电脑IP:端口）；4) 端口是否被占用。可在「星云配置」→「移动端访问」查看正确的访问地址。
                     </div>
                 </div>
 
@@ -3839,7 +3834,7 @@
                         <span class="tutorial-collapsible-arrow">▼</span>
                     </div>
                     <div class="tutorial-faq-a">
-                        目前支持支付宝。购买后即可获得永久授权，终身免费更新。如有其他支付需求，可联系客服咨询。
+                        目前支持微信支付。购买后即可获得永久授权，终身免费更新。扫码添加客服微信即可完成购买。
                     </div>
                 </div>
 
