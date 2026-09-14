@@ -2680,13 +2680,18 @@
                     <span>📥</span>
                     <span>下载试用版</span>
                 </a>
-                <a href="#" id="mirrorDownloadBtn" class="pricing-btn" style="display:none; margin-bottom: 12px; background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);" target="_blank" rel="noopener">
-                    <span>🚀</span>
-                    <span id="mirrorDownloadLabel">115网盘下载（国内加速）</span>
-                </a>
-                <div id="mirrorExtractRow" style="display:none; justify-content:center; align-items:center; gap:10px; margin-bottom: 12px; font-size: 0.9rem; color: #fbbf24;">
-                    <span>提取码：<strong id="mirrorExtractCode" style="letter-spacing:2px;"></strong></span>
-                    <button type="button" id="copyMirrorCodeBtn" onclick="copyMirrorCode()" style="background: rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); border-radius:20px; padding:4px 14px; font-size:0.8rem; cursor:pointer;">复制</button>
+                <div id="mirrorDownloadWrap" style="display:none; margin-bottom: 12px;">
+                    <div style="display:flex; gap:8px; align-items:stretch;">
+                        <a href="#" id="mirrorDownloadBtn" class="pricing-btn" style="flex:1; margin-bottom:0; background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);" target="_blank" rel="noopener">
+                            <span>🚀</span>
+                            <span id="mirrorDownloadLabel">网盘下载</span>
+                        </a>
+                        <select id="mirrorSelect" title="选择网盘" style="flex:0 0 auto; background:rgba(245,158,11,0.12); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); border-radius:12px; padding:8px 10px; font-size:0.85rem; cursor:pointer;"></select>
+                    </div>
+                    <div id="mirrorExtractRow" style="display:none; justify-content:center; align-items:center; gap:10px; margin-top:10px; font-size: 0.9rem; color: #fbbf24;">
+                        <span>提取码：<strong id="mirrorExtractCode" style="letter-spacing:2px;"></strong></span>
+                        <button type="button" id="copyMirrorCodeBtn" onclick="copyMirrorCode()" style="background: rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); border-radius:20px; padding:4px 14px; font-size:0.8rem; cursor:pointer;">复制</button>
+                    </div>
                 </div>
                 <a href="#contact" class="pricing-btn" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);">
                     <span>💬</span>
@@ -2953,10 +2958,30 @@
         'https://yingmofang.xyz/download_mirrors.json',
         'https://raw.githubusercontent.com/woxiangchimantou-cloud/yingmofang-website/main/download_mirrors.json'
     ];
+    const mirrorDownloadWrap = document.getElementById('mirrorDownloadWrap');
     const mirrorDownloadBtn = document.getElementById('mirrorDownloadBtn');
     const mirrorExtractRow = document.getElementById('mirrorExtractRow');
     const mirrorExtractCode = document.getElementById('mirrorExtractCode');
     const mirrorDownloadLabel = document.getElementById('mirrorDownloadLabel');
+    const mirrorSelect = document.getElementById('mirrorSelect');
+
+    // 应用选中的镜像到按钮 + 提取码
+    function applyMirror(m) {
+        if (!m) return;
+        if (mirrorDownloadBtn) {
+            mirrorDownloadBtn.href = m.url;
+            mirrorDownloadBtn.style.display = 'inline-flex';
+            if (mirrorDownloadLabel && m.name) mirrorDownloadLabel.textContent = m.name;
+        }
+        if (mirrorExtractRow && mirrorExtractCode) {
+            if (m.extract_code) {
+                mirrorExtractCode.textContent = m.extract_code;
+                mirrorExtractRow.style.display = 'flex';
+            } else {
+                mirrorExtractRow.style.display = 'none';
+            }
+        }
+    }
 
     async function loadMirrorDownloads() {
         for (const src of MIRROR_JSON_SOURCES) {
@@ -2964,17 +2989,24 @@
                 const resp = await fetch(src, { cache: 'no-store' });
                 if (!resp.ok) continue;
                 const data = await resp.json();
-                const mirror = (data.mirrors || []).find(m => m.type === '115' && m.url);
-                if (!mirror) continue;
-                if (mirrorDownloadBtn) {
-                    mirrorDownloadBtn.href = mirror.url;
-                    mirrorDownloadBtn.style.display = 'inline-flex';
-                    if (mirrorDownloadLabel && mirror.name) mirrorDownloadLabel.textContent = mirror.name;
+                const mirrors = (data.mirrors || []).filter(m => m && m.url);
+                if (!mirrors.length) continue;
+                // 填充网盘下拉（115 / 夸克 / 更多）
+                if (mirrorSelect && mirrors.length > 1) {
+                    mirrorSelect.innerHTML = '';
+                    mirrors.forEach((m, i) => {
+                        const opt = document.createElement('option');
+                        opt.value = String(i);
+                        opt.textContent = m.name || (m.type === '115' ? '115 网盘' : '网盘下载');
+                        mirrorSelect.appendChild(opt);
+                    });
+                    mirrorSelect.style.display = '';
+                    mirrorSelect.onchange = () => applyMirror(mirrors[parseInt(mirrorSelect.value, 10)]);
+                } else if (mirrorSelect) {
+                    mirrorSelect.style.display = 'none';
                 }
-                if (mirror.extract_code && mirrorExtractRow && mirrorExtractCode) {
-                    mirrorExtractCode.textContent = mirror.extract_code;
-                    mirrorExtractRow.style.display = 'flex';
-                }
+                if (mirrorDownloadWrap) mirrorDownloadWrap.style.display = 'block';
+                applyMirror(mirrors[0]);
                 return;
             } catch (e) { /* 尝试下一个镜像源 */ }
         }
