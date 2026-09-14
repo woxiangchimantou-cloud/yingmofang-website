@@ -2681,12 +2681,12 @@
                     <span>下载试用版</span>
                 </a>
                 <div id="mirrorDownloadWrap" style="display:none; margin-bottom: 12px;">
-                    <div style="display:flex; gap:8px; align-items:stretch;">
-                        <a href="#" id="mirrorDownloadBtn" class="pricing-btn" style="flex:1; margin-bottom:0; background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);" target="_blank" rel="noopener">
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <a href="#" id="mirrorDownloadBtn" class="pricing-btn" style="flex:1; margin-bottom:0; padding:12px 20px; white-space:nowrap; background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);" target="_blank" rel="noopener">
                             <span>🚀</span>
                             <span id="mirrorDownloadLabel">网盘下载</span>
                         </a>
-                        <select id="mirrorSelect" title="选择网盘" style="flex:0 0 auto; background:rgba(245,158,11,0.12); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); border-radius:12px; padding:8px 10px; font-size:0.85rem; cursor:pointer;"></select>
+                        <select id="mirrorSelect" title="选择网盘" style="flex:0 0 auto; max-width:150px; white-space:nowrap; background:rgba(245,158,11,0.12); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); border-radius:12px; padding:9px 10px; font-size:0.85rem; cursor:pointer;"></select>
                     </div>
                     <div id="mirrorExtractRow" style="display:none; justify-content:center; align-items:center; gap:10px; margin-top:10px; font-size: 0.9rem; color: #fbbf24;">
                         <span>提取码：<strong id="mirrorExtractCode" style="letter-spacing:2px;"></strong></span>
@@ -2971,7 +2971,7 @@
         if (mirrorDownloadBtn) {
             mirrorDownloadBtn.href = m.url;
             mirrorDownloadBtn.style.display = 'inline-flex';
-            if (mirrorDownloadLabel && m.name) mirrorDownloadLabel.textContent = m.name;
+            // 按钮文字固定为"网盘下载"，网盘名只在右侧下拉里展示，避免行高被长文案撑高
         }
         if (mirrorExtractRow && mirrorExtractCode) {
             if (m.extract_code) {
