@@ -4,7 +4,7 @@
     {
       "type": "115",
       "name": "115网盘下载（国内加速）",
-      "url": "https://115cdn.com/s/swsp85136ox?password=3888&#访问码：3888",
+      "url": "https://115cdn.com/s/swsp85136ox?password=3888",
       "extract_code": "3888",
       "note": "115 网盘分享页，打开后输入提取码即可下载；链接失效时重新分享并更新此文件"
     },
@@ -12,7 +12,7 @@
       "type": "quark",
       "name": "夸克网盘下载（国内加速）",
       "url": "https://pan.quark.cn/s/286a37909569?pwd=E9T9",
-      "extract_code": E9T9",
+      "extract_code": "E9T9",
       "note": "夸克网盘分享页：把分享链接填到 url 字段后（如 https://pan.quark.cn/s/xxxxx），官网下载区下拉会自动出现夸克网盘选项"
     }
   ]
