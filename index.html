@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -1556,6 +1556,122 @@
             box-shadow: 0 12px 35px rgba(124, 58, 237, 0.5);
         }
 
+        /* 划线原价 */
+        .pricing-original {
+            font-size: 1.25rem !important;
+            font-weight: 600;
+            color: #6b7280;
+            text-decoration: line-through;
+            margin-left: 8px;
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
+        }
+
+        /* 限时特惠徽章 */
+        .pricing-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-right: 6px;
+            vertical-align: 1px;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+        }
+
+        /* 试用配额提示 */
+        .pricing-trial {
+            background: rgba(94, 234, 212, 0.08);
+            border: 1px dashed rgba(94, 234, 212, 0.4);
+            color: #5eead4;
+            font-size: 0.85rem;
+            padding: 8px 12px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        /* 客服二维码弹窗 */
+        .qr-modal-bg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .qr-modal-bg.show {
+            display: flex;
+        }
+        .qr-modal-card {
+            background: linear-gradient(145deg, rgba(12, 12, 20, 0.98), rgba(8, 8, 14, 0.98));
+            border: 1px solid rgba(94, 234, 212, 0.3);
+            border-radius: 24px;
+            padding: 32px 28px 24px;
+            max-width: 340px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .qr-modal-card img {
+            width: 220px;
+            height: 220px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 16px auto;
+            display: block;
+            object-fit: contain;
+        }
+        .qr-modal-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .qr-modal-desc {
+            color: #9ca3af;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .qr-modal-tip {
+            color: #5eead4;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        .qr-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: #d1d5db;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .qr-modal-close:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
         /* 微信二维码区域 */
         .contact-section {
             margin-top: 60px;
@@ -2662,20 +2778,23 @@
     <div class="container">
         <h2 class="section-title">💎 选择适合你的方案</h2>
         <p class="section-sub">扫码添加客服微信，获取注册码激活软件</p>
-        <div class="pricing-grid" style="max-width: 420px; margin: 0 auto;">
-            <div class="pricing-card featured">
-                <div class="pricing-icon">💎</div>
-                <h3 class="pricing-title">永久版</h3>
+        <div class="pricing-grid">
+            <!-- 单端版 -->
+            <div class="pricing-card">
+                <div class="pricing-icon">💻</div>
+                <h3 class="pricing-title">单端版</h3>
                 <div class="pricing-price"><span>¥</span>38.88</div>
                 <div class="pricing-period">永久授权 · 终身更新</div>
                 <ul class="pricing-features">
+                    <li><span class="check">✓</span> WIN / NAS 任选一端</li>
+                    <li><span class="check">✓</span> 含手机端</li>
                     <li><span class="check">✓</span> 全部核心功能解锁</li>
-                    <li><span class="check">✓</span> 无限视频数量管理</li>
-                    <li><span class="check">✓</span> 预览图自动生成</li>
-                    <li><span class="check">✓</span> Gif卡片制作功能</li>
+                    <li><span class="check">✓</span> 无限视频管理 + 预览图</li>
+                    <li><span class="check">✓</span> Gif 卡片制作</li>
                     <li><span class="check">✓</span> 永久免费更新</li>
                     <li><span class="check">✓</span> 优先技术支持</li>
                 </ul>
+                <div class="pricing-trial">🎁 免费试用：WIN 10个 / NAS 30个</div>
                 <a href="#" id="pricingDownloadBtn" class="pricing-btn" style="margin-bottom: 12px;">
                     <span>📥</span>
                     <span>下载试用版</span>
@@ -2693,10 +2812,38 @@
                         <button type="button" id="copyMirrorCodeBtn" onclick="copyMirrorCode()" style="background: rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.4); border-radius:20px; padding:4px 14px; font-size:0.8rem; cursor:pointer;">复制</button>
                     </div>
                 </div>
-                <a href="#contact" class="pricing-btn" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);">
+                <button type="button" onclick="openQrModal()" class="pricing-btn" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);">
                     <span>💬</span>
                     <span>扫码购买激活码</span>
+                </button>
+            </div>
+
+            <!-- 全家桶版 -->
+            <div class="pricing-card featured">
+                <div class="pricing-icon">🚀</div>
+                <h3 class="pricing-title">全家桶</h3>
+                <div class="pricing-price">
+                    <span>¥</span>58.88
+                    <span class="pricing-original">¥78.8</span>
+                </div>
+                <div class="pricing-period"><span class="pricing-badge">🔥 限时特惠</span> 永久授权 · 终身更新</div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> WIN + NAS + 手机 三端全开</li>
+                    <li><span class="check">✓</span> 两台设备同时在线</li>
+                    <li><span class="check">✓</span> 含全部拓展包</li>
+                    <li><span class="check">✓</span> 含图库模块</li>
+                    <li><span class="check">✓</span> 全部核心功能解锁</li>
+                    <li><span class="check">✓</span> 永久免费更新</li>
+                    <li><span class="check">✓</span> 优先技术支持</li>
+                </ul>
+                <a href="#" id="pricingFullBtn" class="pricing-btn" style="margin-bottom: 12px; background: linear-gradient(135deg, #0d9488, #5eead4); box-shadow: 0 8px 30px rgba(13, 148, 136, 0.45);">
+                    <span>💎</span>
+                    <span>立即获取全家桶</span>
                 </a>
+                <button type="button" onclick="openQrModal()" class="pricing-btn" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);">
+                    <span>💬</span>
+                    <span>扫码购买激活码</span>
+                </button>
             </div>
         </div>
 
@@ -2784,6 +2931,17 @@
     </div>
 </div>
 
+<!-- 客服二维码弹窗 -->
+<div id="qrModalBg" class="qr-modal-bg">
+    <div class="qr-modal-card">
+        <button type="button" class="qr-modal-close" onclick="closeQrModal()" aria-label="关闭">✕</button>
+        <div class="qr-modal-title">📱 添加客服微信</div>
+        <p class="qr-modal-desc">扫描二维码添加客服，获取注册码</p>
+        <img src="https://pic.imgdd.cc/i/034SSN4pbZx959uvGN7dpU.jpg" alt="客服微信二维码">
+        <p class="qr-modal-tip">💬 添加后发送「购买影魔方」即可获取注册码</p>
+        <p class="qr-modal-tip">🛡️ 正版授权 · 安全可靠 · 永久售后</p>
+    </div>
+</div>
 <script>
     // 页面加载动画
     window.addEventListener('load', () => {
@@ -3070,6 +3228,31 @@
             }
         });
     });
+
+    // 客服二维码弹窗
+    const qrModalBg = document.getElementById('qrModalBg');
+    function openQrModal() {
+        if (qrModalBg) qrModalBg.classList.add('show');
+    }
+    function closeQrModal() {
+        if (qrModalBg) qrModalBg.classList.remove('show');
+    }
+    if (qrModalBg) {
+        qrModalBg.addEventListener('click', function(e) {
+            if (e.target === qrModalBg) closeQrModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeQrModal();
+        });
+        // 「立即获取全家桶」绑定弹窗
+        const pricingFullBtn = document.getElementById('pricingFullBtn');
+        if (pricingFullBtn) {
+            pricingFullBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openQrModal();
+            });
+        }
+    }
 </script>
 </body>
 </html>
