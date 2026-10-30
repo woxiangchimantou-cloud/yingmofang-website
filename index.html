@@ -287,9 +287,7 @@ section{padding:132px 52px;max-width:1420px;margin:0 auto}
 .screen .bar{height:22px;display:flex;align-items:center;gap:5px;padding:0 9px;border-bottom:1px solid rgba(255,255,255,.07);background:#101216}
 .screen .bar i{width:6px;height:6px;border-radius:50%;background:#2a2f38;display:block}
 .screen .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:11px}
-.screen .grid b{display:block;aspect-ratio:2/3;background:linear-gradient(150deg,#1b2028,#0d1015)}
-.screen .grid b:nth-child(3n){background:linear-gradient(160deg,#2a2230,#12101a)}
-.screen .grid b:nth-child(4n){background:linear-gradient(140deg,#22302b,#0f1512)}
+.screen .grid img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:3px;background:linear-gradient(150deg,#1b2028,#0d1015)}
 .sc1{left:0;top:20px;width:64%;height:330px;border-radius:7px}
 .sc2{right:0;bottom:0;width:38%;height:300px;border-radius:16px}
 .sc2 .grid{grid-template-columns:repeat(2,1fr)}
@@ -861,11 +859,19 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
     <div class="screens rv">
       <div class="screen sc1">
         <div class="bar"><i></i><i></i><i></i></div>
-        <div class="grid"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+        <div class="grid">
+          <img src="img/interstellar.jpg" alt="" loading="lazy"><img src="img/dune.jpg" alt="" loading="lazy"><img src="img/wandering-earth.jpg" alt="" loading="lazy"><img src="img/stranger-things.jpg" alt="" loading="lazy">
+          <img src="img/oppenheimer.jpg" alt="" loading="lazy"><img src="img/avengers.jpg" alt="" loading="lazy"><img src="img/interstellar.jpg" alt="" loading="lazy"><img src="img/dune.jpg" alt="" loading="lazy">
+          <img src="img/wandering-earth.jpg" alt="" loading="lazy"><img src="img/stranger-things.jpg" alt="" loading="lazy"><img src="img/oppenheimer.jpg" alt="" loading="lazy"><img src="img/avengers.jpg" alt="" loading="lazy">
+        </div>
       </div>
       <div class="screen sc2">
         <div class="bar"><i></i><i></i><i></i></div>
-        <div class="grid"><b></b><b></b><b></b><b></b><b></b><b></b></div>
+        <div class="grid">
+          <img src="img/interstellar.jpg" alt="" loading="lazy"><img src="img/dune.jpg" alt="" loading="lazy">
+          <img src="img/wandering-earth.jpg" alt="" loading="lazy"><img src="img/stranger-things.jpg" alt="" loading="lazy">
+          <img src="img/oppenheimer.jpg" alt="" loading="lazy"><img src="img/avengers.jpg" alt="" loading="lazy">
+        </div>
       </div>
     </div>
   </div>
