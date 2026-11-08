@@ -432,12 +432,18 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 .foot-legal{margin-top:14px;font-size:10.5px;line-height:1.9;color:rgba(255,255,255,.24);letter-spacing:.03em}
 
 /* 客服弹窗 */
-.modal{position:fixed;inset:0;z-index:200;background:rgba(4,4,6,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:grid;place-items:center;padding:24px}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(4,4,6,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:grid;grid-template-columns:minmax(0,1fr);place-items:center;padding:24px}
 .modal[hidden]{display:none}
-.modal-card{background:var(--bg-2);border:1px solid var(--line);padding:40px 34px 32px;text-align:center;max-width:340px;width:100%;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.8)}
+.modal-card{background:var(--bg-2);border:1px solid var(--line);padding:40px 30px 30px;text-align:center;max-width:380px;width:100%;min-width:0;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.8)}
 .modal-card h4{font-size:18px;margin-bottom:22px;font-weight:500;letter-spacing:.08em}
 .qrbox{width:200px;aspect-ratio:1;margin:0 auto 18px;border:1px solid rgba(255,255,255,.14);overflow:hidden;background:#fff}
 .qrbox img{width:100%;height:100%;object-fit:contain;display:block}
+/* 双客服码：并排，窄屏自动等比缩小，不会溢出卡片 */
+.qr-grid{display:flex;gap:14px;justify-content:center;align-items:flex-start;margin:0 auto 16px}
+.qr-item{flex:1 1 0;min-width:0;max-width:150px}
+.qr-item .qrbox{width:100%;margin:0 0 9px}
+.qr-cap{font-size:11px;color:var(--ink-3);letter-spacing:.06em;line-height:1.5}
+.qr-cap b{color:var(--ink-2);font-weight:500}
 .modal-card p{font-size:12px;color:var(--ink-3);line-height:1.95}
 .modal-x{position:absolute;right:10px;top:8px;background:none;border:none;color:var(--ink-3);font-size:15px;cursor:pointer;padding:8px;line-height:1}
 .modal-x:hover{color:var(--gold)}
@@ -1020,8 +1026,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       <div class="a">可以装在同一个目录下并存，互不干扰。但<b>不要让两边的自动整理同时跑</b> —— 一个在搬文件、另一个在扫，很容易撞上「文件正在被占用」。</div>
     </details>
     <details>
-      <summary>买了不满意能退吗？</summary>
-      <div class="a">先试用再买，试用期足够你判断合不合用。真遇到买了用不了的情况（比如设备不兼容），联系客服处理退款，按你购买渠道的规则执行。</div>
+      <summary>买了能退吗？</summary>
+      <div class="a">本产品提供<b>完整的试用版</b>，功能和正式版一致，试用期内足够你把该试的都试一遍。<b>请试用满意后再购买，购买后不支持退款。</b>若遇到设备不兼容、激活失败导致完全用不了的情况，联系客服协助解决到可用为止。</div>
     </details>
   </div>
 </section>
@@ -1076,8 +1082,17 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   <div class="modal-card">
     <button class="modal-x" id="qrClose" type="button" aria-label="关闭">✕</button>
     <h4 class="serif">添加客服微信</h4>
-    <div class="qrbox"><img src="img/kefu-qr.jpg?v=20261102" alt="Media cube 客服微信二维码" width="420" height="420"></div>
-    <p>扫码添加客服，发送「购买影魔方」<br>即可获取激活码 · 永久售后</p>
+    <div class="qr-grid">
+      <div class="qr-item">
+        <div class="qrbox"><img src="img/kefu-qr.jpg?v=20261108" alt="影魔方客服微信二维码（一号）" width="420" height="420"></div>
+        <div class="qr-cap"><b>客服一号</b></div>
+      </div>
+      <div class="qr-item">
+        <div class="qrbox"><img src="img/kefu-qr-2.jpg?v=20261108" alt="影魔方客服微信二维码（二号·备用）" width="420" height="420"></div>
+        <div class="qr-cap"><b>客服二号</b> · 备用</div>
+      </div>
+    </div>
+    <p>扫码添加客服，发送「购买影魔方」<br>即可获取激活码 · 永久售后<br>一号加不上就扫二号</p>
   </div>
 </div>
 
