@@ -444,7 +444,14 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 .qr-item .qrbox{width:100%;margin:0 0 9px}
 .qr-cap{font-size:11px;color:var(--ink-3);letter-spacing:.06em;line-height:1.5}
 .qr-cap b{color:var(--ink-2);font-weight:500}
+.qr-step{display:flex;align-items:center;justify-content:center;gap:9px;font-size:11px;color:var(--ink-3);letter-spacing:.14em;margin:0 0 11px}
+.qr-step::before,.qr-step::after{content:"";height:1px;width:24px;background:rgba(255,255,255,.16)}
+.buy-steps{text-align:left;margin:0 0 6px}
+.buy-step{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--ink-2);line-height:1.75;margin-bottom:10px}
+.buy-step .n{flex:none;width:18px;height:18px;border-radius:50%;background:var(--gold);color:#0b0b0d;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
 .modal-card p{font-size:12px;color:var(--ink-3);line-height:1.95}
+.modal-card p.buy-notice{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);color:var(--ink-2);font-size:11.5px;line-height:1.8}
+.modal-card p.buy-notice b{color:var(--gold)}
 .modal-x{position:absolute;right:10px;top:8px;background:none;border:none;color:var(--ink-3);font-size:15px;cursor:pointer;padding:8px;line-height:1}
 .modal-x:hover{color:var(--gold)}
 
@@ -923,7 +930,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   <div class="dl rv">
     <div class="dl-h">
       <div class="dl-t">下载最新版<span class="dl-ver" id="dlVer" hidden></span></div>
-      <div class="dl-sub">Windows x64 安装包 · 装完直接试用，满意再买激活码<br>NAS 镜像与安卓 APK 在下载页内附说明</div>
+      <div class="dl-sub">Windows x64 安装包 · 装完直接试用 6 小时，满意再开通账号<br>NAS 镜像与安卓 APK 在下载页内附说明</div>
     </div>
     <div class="dl-row">
       <a class="dlbtn" id="dl115" href="https://115cdn.com/s/sws090d36ox?password=8888" target="_blank" rel="noopener">
@@ -965,7 +972,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <li>永久免费更新</li>
         <li>优先技术支持</li>
       </ul>
-      <a href="#" class="js-buy">扫码购买激活码</a>
+      <a href="#" class="js-buy">怎么买？看这里</a>
     </div>
 
     <div class="plan hot">
@@ -981,7 +988,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <li>永久免费更新</li>
         <li>优先技术支持</li>
       </ul>
-      <a href="#" class="js-buy">扫码购买激活码</a>
+      <a href="#" class="js-buy">怎么买？看这里</a>
     </div>
   </div>
 </section>
@@ -1081,7 +1088,13 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 <div class="modal" id="qrModal" hidden>
   <div class="modal-card">
     <button class="modal-x" id="qrClose" type="button" aria-label="关闭">✕</button>
-    <h4 class="serif">添加客服微信</h4>
+    <h4 class="serif">购买与开通</h4>
+    <div class="buy-steps">
+      <div class="buy-step"><span class="n">1</span><div>先下载并安装影魔方，免费试用 6 小时</div></div>
+      <div class="buy-step"><span class="n">2</span><div>在软件顶部点「💳 立即购买」，扫码付款</div></div>
+      <div class="buy-step"><span class="n">3</span><div>把付款截图和你的邮箱发给客服，开通后回软件登录</div></div>
+    </div>
+    <div class="qr-step" style="margin-top:16px">第 3 步 · 客服微信</div>
     <div class="qr-grid">
       <div class="qr-item">
         <div class="qrbox"><img src="img/kefu-qr.jpg?v=20261108" alt="影魔方客服微信二维码（一号）" width="420" height="420"></div>
@@ -1092,7 +1105,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <div class="qr-cap"><b>客服二号</b> · 备用</div>
       </div>
     </div>
-    <p>扫码添加客服，发送「购买影魔方」<br>即可获取激活码 · 永久售后<br>一号加不上就扫二号</p>
+    <p>付款截图 + 邮箱 发给客服，开通后回软件登录<br>永久售后 · 一号加不上就扫二号</p>
+    <p class="buy-notice">⚠️ 请先试用满意再付款：<b>付款开通后暂不支持退款，望周知</b></p>
   </div>
 </div>
 
