@@ -638,12 +638,25 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   padding:18px 14px;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s}
 .shop-tier:hover{border-color:var(--gold);transform:translateY(-2px)}
 .shop-tier.hot{border-color:var(--gold)}
+/* 点档位到弹出付款页有一两秒（要先向支付平台下单），必须给反馈，
+   否则客户以为没点上，会连着点好几下 */
+@keyframes shopspin{to{transform:rotate(360deg)}}
+.shop-tier.loading{pointer-events:none;opacity:.72;position:relative;
+  border-color:var(--gold);transform:none}
+.shop-tier.loading::after{content:"";position:absolute;right:12px;top:12px;
+  width:13px;height:13px;border:2px solid rgba(224,178,92,.28);
+  border-top-color:var(--gold);border-radius:50%;animation:shopspin .7s linear infinite}
+.shop-tier.waiting{cursor:progress}
 .shop-tier .t{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
 .shop-tier .p{display:block;font-size:21px;color:var(--gold-2);font-family:Georgia,serif;margin-bottom:8px}
 .shop-tier .d{display:block;font-size:11.5px;color:var(--ink-3);line-height:1.8}
 .shop-tier .tag{display:inline-block;font-size:10px;color:var(--gold);letter-spacing:.1em;margin-bottom:8px}
 .shop-tip{font-size:11.5px;color:var(--ink-3);line-height:1.9;margin-top:14px}
 .shop-tip b{color:var(--gold)}
+/* 「交易单号在哪找」的步骤盒：客户是照着抄数字，必须给足对比度 */
+.shop-how{font-size:11.5px;color:var(--ink-2);line-height:1.95;background:rgba(224,178,92,.05);
+  border:1px solid rgba(224,178,92,.18);border-radius:10px;padding:11px 13px;margin-top:10px;margin-bottom:16px}
+.shop-how b{color:var(--gold-2);font-weight:600}
 .shop-resume{margin-top:20px;padding-top:16px;border-top:1px solid rgba(224,178,92,.14)}
 .shop-resume a,.shop-link{color:var(--gold);font-size:12px;text-decoration:none;cursor:pointer}
 .shop-resume a:hover,.shop-link:hover{text-decoration:underline}
@@ -657,14 +670,38 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 .shop-help{margin-top:10px}
 .shop-help a,.shop-tip a{color:var(--gold);text-decoration:underline;cursor:pointer}
 .shop-help a:hover,.shop-tip a:hover{color:var(--gold-2)}
+/* 购买层右上角的「客服」小按钮：每屏都在，不用滚到页面底部才找得到 */
+.shop-kefu{position:absolute;right:46px;top:10px;background:transparent;
+  border:1px solid rgba(224,178,92,.45);color:var(--gold);font:inherit;font-size:11.5px;
+  line-height:1;padding:6px 11px;cursor:pointer;letter-spacing:.08em}
+.shop-kefu:hover{border-color:var(--gold);background:rgba(224,178,92,.1);color:var(--gold-2)}
+/* 价格卡里的「问客服」：放在「先下载试用」下面 */
+.plan a.plan-kefu{display:block;align-self:center;width:auto;margin-top:12px;padding:7px 18px;
+  border:1px solid rgba(224,178,92,.4);background:transparent;color:var(--gold);
+  font-size:12px;font-weight:400;letter-spacing:.06em}
+.plan a.plan-kefu:hover{border-color:var(--gold);background:rgba(224,178,92,.08);color:var(--gold-2)}
+.plan.hot a.plan-kefu{background:transparent;color:var(--gold);border-color:rgba(224,178,92,.4);font-weight:400}
+.plan.hot a.plan-kefu:hover{background:rgba(224,178,92,.08);color:var(--gold-2)}
+/* 购买层里的客服按钮：客户在付款前后最容易卡住，要做成按钮，不能只是一行小字 */
+.shop-kefubox{margin:22px 0 0;padding:16px;border:1px solid rgba(224,178,92,.3);
+  background:rgba(224,178,92,.045);text-align:center}
+.shop-kefubox .kq{margin:0 0 12px;padding:0;background:none;font-size:12.5px;color:var(--ink-2);line-height:1.8}
+.shop-kefubtn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gold);
+  background:transparent;color:var(--gold);font:inherit;font-size:13.5px;font-weight:600;
+  padding:11px 26px;cursor:pointer;letter-spacing:.06em;transition:background .2s,color .2s}
+.shop-kefubtn:hover{background:var(--gold);color:#14100a}
+.shop-kefubtn svg{width:15px;height:15px;flex:none}
+.shop-kefubox .s{margin:10px 0 0;font-size:11px;color:var(--ink-3);line-height:1.7}
 .shop-order{background:var(--card);border:1px solid var(--line);padding:16px 18px;margin-bottom:18px;
   font-size:13px;color:var(--ink-2);line-height:2}
 .shop-order b{color:var(--gold-2);font-size:18px}
+.shop-order .shop-order-tip{display:block;margin-top:9px;padding-top:9px;
+  border-top:1px solid var(--line);font-size:11px;color:var(--ink-3);line-height:1.75}
 .shop-btn{display:inline-block;background:var(--gold);color:#14100a;border:none;font:inherit;
   font-size:14px;font-weight:600;padding:13px 30px;cursor:pointer;letter-spacing:.04em}
 .shop-btn:hover{background:var(--gold-2)}
 .shop-btn:disabled{opacity:.5;cursor:not-allowed}
-.shop-plain{background:none;border:none;color:var(--ink-3);font:inherit;font-size:12px;
+.shop-plain{display:block;background:none;border:none;color:var(--ink-3);font:inherit;font-size:12px;
   cursor:pointer;padding:0;margin-top:16px;text-decoration:underline}
 .shop-field{display:block;margin-bottom:16px}
 .shop-field span{display:block;font-size:12px;color:var(--ink-3);margin-bottom:7px}
@@ -1044,6 +1081,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       </ul>
       <a href="#buy" class="js-buy" data-shop-open="1">立即购买 · 自助开通</a>
       <a href="#" class="plan-dl js-dl">还没装软件？先下载试用 →</a>
+      <a href="#" class="plan-kefu js-kefu">买之前有疑问？点这里问客服</a>
     </div>
 
     <div class="plan hot">
@@ -1063,6 +1101,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       </ul>
       <a href="#buy" class="js-buy" data-shop-open="1">立即购买 · 自助开通</a>
       <a href="#" class="plan-dl js-dl">还没装软件？先下载试用 →</a>
+      <a href="#" class="plan-kefu js-kefu">买之前有疑问？点这里问客服</a>
     </div>
   </div>
 </section>
@@ -1189,6 +1228,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 <div class="shop" id="shopLayer" hidden role="dialog" aria-modal="true" aria-label="购买与注册">
   <div class="shop-box">
     <button class="shop-x" id="shopClose" type="button" aria-label="关闭">✕</button>
+    <button class="shop-kefu js-kefu" type="button" aria-label="联系客服">客服</button>
     <div class="shop-brand">◈ 影魔方 · 自助开通</div>
 
     <!-- ① 选档：三张卡一次点完，不另设「选 Windows / NAS」的第二步 -->
@@ -1215,7 +1255,14 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       </div>
       <p class="shop-tip">⚠️ 请先试用满意再付款：<b>购买后不支持退款</b>。账号由你自己注册，付款后立刻可用，全程不需要联系客服。</p>
       <div class="shop-resume"><a href="#" id="shopResume">已经付过款了？点这里接着开通 →</a></div>
-      <p class="shop-tip shop-help">买之前想问一句？<a href="#" class="js-kefu">点这里加客服微信</a></p>
+      <div class="shop-kefubox">
+        <p class="kq">购买后使用有疑问，想先问清楚？</p>
+        <button class="shop-kefubtn js-kefu" type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.7 3 2.4 6.5 2.4 10.9c0 2.5 1.5 4.7 3.8 6.1-.2.8-.7 2-.9 2.4-.1.2 0 .4.2.4.3 0 2.4-1.1 3.4-1.7.9.2 1.9.4 3.1.4 5.3 0 9.6-3.5 9.6-7.6S17.3 3 12 3z"/></svg>
+          添加客服咨询
+        </button>
+        <p class="s">售后答疑专用 · 下单和开号都由你自己完成，不用等人工</p>
+      </div>
     </section>
 
     <!-- ② 付款：二维码是每笔订单现生成的，绝不是固定收款图 -->
@@ -1227,7 +1274,14 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       <button class="shop-btn" id="shopPayBtn" type="button" hidden>在手机上付款？点这里</button>
       <p class="shop-tip" id="shopPayMobile" hidden>你现在是用手机看这页的话，<b>请换另一台手机扫上面的码</b>，或者到电脑上打开这个页面再买。微信这个码不能长按识别、也不能存进相册。</p>
       <p class="shop-tip">付完这页<b>会自动继续</b>，请先别关。密码由你自己设，不用收验证码，也不用加客服。</p>
-      <p class="shop-tip shop-help">付了钱页面没动，或者码扫不上？<a href="#" class="js-kefu">点这里找客服</a>，钱不会丢。</p>
+      <div class="shop-kefubox">
+        <p class="kq">付了钱页面没动，或者码扫不上？</p>
+        <button class="shop-kefubtn js-kefu" type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.7 3 2.4 6.5 2.4 10.9c0 2.5 1.5 4.7 3.8 6.1-.2.8-.7 2-.9 2.4-.1.2 0 .4.2.4.3 0 2.4-1.1 3.4-1.7.9.2 1.9.4 3.1.4 5.3 0 9.6-3.5 9.6-7.6S17.3 3 12 3z"/></svg>
+          找客服处理
+        </button>
+        <p class="s">钱不会丢 · 把微信账单截图发给客服就能核对，别重复付款</p>
+      </div>
       <button class="shop-plain" id="shopBackPick" type="button">← 换一档</button>
     </section>
 
@@ -1256,14 +1310,15 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       <div style="text-align:center;margin-top:20px"><button class="shop-btn" id="shopDoneClose" type="button">知道了，回软件登录</button></div>
     </section>
 
-    <!-- ⑤ 付过款中途关了页面：同机一键续办，或凭订单号续办 -->
+    <!-- ⑤ 付过款中途关了页面：同机一键续办 / 凭微信账单交易单号续办 / 客服给的兑换码 -->
     <section class="shop-view" id="shopFind" hidden>
       <h3>付过款了，接着开通</h3>
-      <p class="shop-sub">同一台电脑点第一个按钮就能接着填；换过电脑就填付款页面上那行订单号。</p>
+      <p class="shop-sub">同一台电脑，点下面第一个按钮就能接着填。<br>换过电脑、或中途把页面关了，就填微信账单里的<b>交易单号</b>。</p>
       <button class="shop-btn" id="shopFindLocal" type="button">用这台电脑上次的订单继续</button>
-      <label class="shop-field" style="margin-top:22px"><span>订单号</span>
-        <input id="shopOrderId" type="text" autocomplete="off" placeholder="例如 xorpay-20261111-xxxx">
+      <label class="shop-field" style="margin-top:22px"><span>微信账单里的「交易单号」</span>
+        <input id="shopOrderId" type="text" autocomplete="off" inputmode="numeric" placeholder="例如 4500000555202611116...">
       </label>
+      <p class="shop-how">在哪找：微信 → <b>我</b> → <b>服务</b> → <b>钱包</b> → 右上角 <b>账单</b> → 找到这笔付款点进去 → 第一个「<b>交易单号</b>」就是一长串数字，复制进去就行。<br>客服把<b>兑换码</b>发给你了？兑换码也能填在上面的框里，一样能开通。</p>
       <button class="shop-btn" id="shopFindBtn" type="button">继续开通</button>
       <div class="shop-err" id="shopFindErr" hidden></div>
       <button class="shop-plain" id="shopFindBack" type="button">← 回到选档</button>
@@ -1429,8 +1484,15 @@ addEventListener('keydown',e=>{
   };
   var ERR_TEXT = {
     not_ready: '收款还没开通，请稍后再来；着急的话联系客服。',
+    /* 总开关 SELF_SERVE 没开时，Worker 走兜底 404 回的就是 not_found；
+       以前这里没映射，客户看到的是「没成功，请再试一次」，越试越懵。 */
+    not_found: '收款还没开通，请稍后再来；着急的话联系客服。',
     bad_tier: '没认出这一档，请回到选档重新点一次。',
-    invalid_code: '这一单的兑换码用不了了，请把订单号发给客服核对，钱不会丢。',
+    invalid_code: '这个兑换码不对，或者已经用过了。核对一下再试；也可以把微信账单发给客服，一样能给你开通。',
+    no_order: '这台电脑上没找到上次的订单。换过电脑或清过浏览器的话，把微信账单里的「交易单号」填进来就行。',
+    /* 找回接口专用：查不到这笔交易单号 */
+    no_such_order: '没查到这笔付款。先确认交易单号复制完整（是一长串数字，别少了头尾）；实在不行把微信账单那张截图发给客服，一样能给你开通。',
+    not_paid: '这笔还没到账，等一两分钟再试。一直不行就把账单截图发给客服，钱不会丢。',
     code_used: '这一单已经开过账号了，直接回软件登录就行。',
     code_expired: '这一单放太久了，请联系客服处理，钱不会丢。',
     already_exists: '这个邮箱已经有账号了：要么直接回软件登录，要么换个邮箱再点一次完成，不用重新付款。',
@@ -1510,7 +1572,8 @@ addEventListener('keydown',e=>{
       var safeAmt = isFinite(amt) ? amt.toFixed(2) : '—';
       var safeOrder = String(d.order_id || '').replace(/[^A-Za-z0-9_-]/g, '');
       var info = $('shopOrderInfo');
-      if(info) info.innerHTML = '你选的是 <b>'+(TIER_TEXT[tier]||'')+'</b><br>应付 <b>¥'+safeAmt+'</b><br>订单号 '+safeOrder;
+      if(info) info.innerHTML = '你选的是 <b>'+(TIER_TEXT[tier]||'')+'</b><br>应付 <b>¥'+safeAmt+'</b><br>订单号 <b>'+safeOrder+'</b>'
+        + '<span class="shop-order-tip">关掉页面也不怕：微信账单里这笔付款的「交易单号」就是凭证，随时能接着开通，不用重新付款。</span>';
       var qr = $('shopPayQr');
       var q = String(d.pay_qr || '');
       if(qr) qr.innerHTML = /^(https:\/\/|data:image\/)/.test(q)
@@ -1567,14 +1630,35 @@ addEventListener('keydown',e=>{
   /* 中途关了页面：同机一键续办 / 换机凭订单号续办 */
   function resumeLocal(){
     var o = load();
-    if(!o || !o.order_id) return Promise.resolve({ok:false, reason:'invalid_code'});
+    /* 本地没有订单号时，以前回的是 invalid_code，客户看到「兑换码用不了了」
+       会以为钱白花了。这里如实说没找到上次的单据，指引去填订单号。 */
+    if(!o || !o.order_id) return Promise.resolve({ok:false, reason:'no_order'});
     state.order_id = o.order_id;
     if(o.code) return Promise.resolve(onPaid(o));
     return pollPaid(o.order_id);
   }
-  function resumeById(orderId){
-    if(!orderId) return Promise.resolve({ok:false, reason:'invalid_code'});
-    return pollPaid(String(orderId).trim());
+  /* 客户手里只有微信账单 —— 那上面根本没有我们的订单号（ymf- 开头）。
+     所以纯数字长串一律当「交易单号」走找回接口；只有像订单号的字符串才查状态。 */
+  function findByTxn(v){
+    return post('/v1/shop/order/find', { txn: v }).then(function(d){
+      if(!d || d.ok !== true) return d || {ok:false, reason:'no_such_order'};
+      return onPaid(d);
+    });
+  }
+  /* 客服把兑换码直接发给客户时走这条：不查订单，只校验码本身还活着 */
+  function useRedeemCode(code){
+    return post('/v1/shop/redeem_info', { code: code }).then(function(d){
+      if(!d || d.ok !== true) return d || {ok:false, reason:'invalid_code'};
+      return onPaid({ ok:true, order_id:'', code: code, tier: d.tier });
+    });
+  }
+  function resumeById(v){
+    var s = String(v||'').trim();
+    if(!s) return Promise.resolve({ok:false, reason:'no_order'});
+    var digits = s.replace(/[\s\u00a0-]/g, '');
+    if(/^YMF-/i.test(s)) return useRedeemCode(s);
+    if(/^\d{8,}$/.test(digits)) return findByTxn(digits);
+    return pollPaid(s);
   }
 
   function open(){
@@ -1599,13 +1683,31 @@ addEventListener('keydown',e=>{
     if(el) el.addEventListener('click', function(e){ if(e && e.preventDefault) e.preventDefault(); fn(e); });
   }
   function bindAll(){
+    /* 点档位 → 付款页要等后端向支付平台下单，有一两秒空窗。
+       这段时间必须转圈 + 锁住所有档位，不然客户以为没点上会连点。 */
+    function clearTierState(){
+      Array.prototype.forEach.call(document.querySelectorAll('.shop-tier'), function(b){
+        b.disabled = false;
+        b.classList.remove('loading');
+        b.classList.remove('waiting');
+      });
+    }
     Array.prototype.forEach.call(document.querySelectorAll('.shop-tier'), function(btn){
       btn.addEventListener('click', function(e){
         if(e && e.preventDefault) e.preventDefault();
-        var r = createOrder(btn.getAttribute('data-tier'));
-        if(r && r.then) r.then(function(d){
-          if(d && d.ok === false) showErr('shopErr', why(d.reason));
+        if(btn.disabled) return;
+        showErr('shopErr','');
+        Array.prototype.forEach.call(document.querySelectorAll('.shop-tier'), function(b){
+          b.disabled = true;
+          b.classList.add('waiting');
         });
+        btn.classList.add('loading');
+        var done = function(d){
+          clearTierState();
+          if(d && d.ok === false) showErr('shopErr', why(d && d.reason));
+        };
+        var r = createOrder(btn.getAttribute('data-tier'));
+        if(r && r.then) r.then(done, done); else done(r);
       });
     });
     bind('shopClose', close);
@@ -1641,11 +1743,9 @@ addEventListener('keydown',e=>{
         if(d && d.ok === false) showErr('shopErr', why(d.reason));
       });
     });
-    var layer = $('shopLayer');
-    if(layer) layer.addEventListener('click', function(e){ if(e.target === layer) close(); });
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && layer && !layer.hidden) close();
-    });
+    /* 购买层不许点遮罩 / 按 Esc 关掉：客户可能钱已经付了，误关就得重新买。
+       2026-11-11 实付测试踩过——点框外整个注册界面消失。
+       现在只有右上角 ✕ 能关，其余一律不动。 */
     window.addEventListener('hashchange', function(){ if(isBuyHash()) open(); });
     if(isBuyHash()) open();
   }
