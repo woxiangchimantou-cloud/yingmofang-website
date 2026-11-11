@@ -647,6 +647,14 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   width:13px;height:13px;border:2px solid rgba(224,178,92,.28);
   border-top-color:var(--gold);border-radius:50%;animation:shopspin .7s linear infinite}
 .shop-tier.waiting{cursor:progress}
+/* 点完档位立刻切到付款页，二维码位置先放转圈占位。
+   下单要连微信收款通道，实测 2~6 秒，干等选档页客户会以为卡死。 */
+.shop-wait{display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:30px 0 22px;text-align:center}
+.shop-wait .sw-spin{width:32px;height:32px;border:3px solid rgba(224,178,92,.22);
+  border-top-color:var(--gold);border-radius:50%;animation:shopspin .8s linear infinite}
+.shop-wait .sw-t{font-size:13px;color:var(--ink-2)}
+.shop-wait .sw-s{font-size:11.5px;color:var(--ink-3);line-height:1.8;max-width:300px}
 .shop-tier .t{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
 .shop-tier .p{display:block;font-size:21px;color:var(--gold-2);font-family:Georgia,serif;margin-bottom:8px}
 .shop-tier .d{display:block;font-size:11.5px;color:var(--ink-3);line-height:1.8}
@@ -701,6 +709,11 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   font-size:14px;font-weight:600;padding:13px 30px;cursor:pointer;letter-spacing:.04em}
 .shop-btn:hover{background:var(--gold-2)}
 .shop-btn:disabled{opacity:.5;cursor:not-allowed}
+/* hidden 属性默认只是 UA 的 display:none，.shop-btn 的 display:inline-block 会盖掉它，
+   结果「在手机上付款」「重新生成付款码」在等待态也照样显示。必须显式压住。 */
+.shop-btn[hidden]{display:none}
+/* 失败后「重新生成付款码」紧跟在红色提示条下面，不留缝会粘在一起 */
+#shopPayRetry{margin-top:14px}
 .shop-plain{display:block;background:none;border:none;color:var(--ink-3);font:inherit;font-size:12px;
   cursor:pointer;padding:0;margin-top:16px;text-decoration:underline}
 .shop-field{display:block;margin-bottom:16px}
@@ -1253,6 +1266,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
           <span class="d">永久授权 · 终身更新<br>WIN / NAS / 手机 各 3 台<br>手机可带出门 · 含实时字幕</span>
         </button>
       </div>
+      <div class="shop-err" id="shopPickErr" hidden></div>
       <p class="shop-tip">⚠️ 请先试用满意再付款：<b>购买后不支持退款</b>。账号由你自己注册，付款后立刻可用，全程不需要联系客服。</p>
       <div class="shop-resume"><a href="#" id="shopResume">已经付过款了？点这里接着开通 →</a></div>
       <div class="shop-kefubox">
@@ -1271,6 +1285,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       <div class="shop-order" id="shopOrderInfo"></div>
       <p class="shop-sub" id="shopPayHint">用微信扫下面的码付款，这个码只对这一单有效</p>
       <div id="shopPayQr"></div>
+      <div class="shop-err" id="shopPayErr" hidden></div>
+      <button class="shop-btn" id="shopPayRetry" type="button" hidden>重新生成付款码</button>
       <button class="shop-btn" id="shopPayBtn" type="button" hidden>在手机上付款？点这里</button>
       <p class="shop-tip" id="shopPayMobile" hidden>你现在是用手机看这页的话，<b>请换另一台手机扫上面的码</b>，或者到电脑上打开这个页面再买。微信这个码不能长按识别、也不能存进相册。</p>
       <p class="shop-tip">付完这页<b>会自动继续</b>，请先别关。密码由你自己设，不用收验证码，也不用加客服。</p>
@@ -1521,12 +1537,20 @@ addEventListener('keydown',e=>{
     el.textContent = msg || '';
     el.hidden = !msg;
   }
-  function post(path, body){
-    return fetch(API+path, {
+  function post(path, body, ms){
+    var opt = {
       method: 'POST',
       headers: {'content-type':'application/json'},
       body: JSON.stringify(body||{})
-    }).then(function(r){ return r.json(); });
+    };
+    var ctl = 0, timer = 0;
+    if(ms && typeof AbortController === 'function'){
+      try{ ctl = new AbortController(); opt.signal = ctl.signal; }catch(e){ ctl = 0; }
+      if(ctl) timer = setTimeout(function(){ try{ ctl.abort(); }catch(e){} }, ms);
+    }
+    return fetch(API+path, opt).then(function(r){ return r.json(); })
+      .then(function(d){ if(timer) clearTimeout(timer); return d; },
+            function(e){ if(timer) clearTimeout(timer); throw e; });
   }
   function save(o){
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(o||{})); }catch(e){}
@@ -1554,12 +1578,66 @@ addEventListener('keydown',e=>{
     return state;
   }
 
+  /* 付款页的等待态：点完档位立刻切页 + 转圈，
+     不然客户对着选档页干等 3~6 秒，会以为没点上、连点好几次。 */
+  var payTimer = 0;
+  /* 客户可能「换一档」后立刻又点另一档：只认最后一次下单的响应，早到的丢掉 */
+  var paySeq = 0;
+  function payWait(tier){
+    var info = $('shopOrderInfo'), qr = $('shopPayQr'), hint = $('shopPayHint');
+    if(info) info.innerHTML = '你选的是 <b>' + (TIER_TEXT[tier] || '') + '</b>';
+    if(hint) hint.textContent = '正在生成这一单的付款码…';
+    if(qr) qr.innerHTML = '<div class="shop-wait"><div class="sw-spin"></div>'
+      + '<div class="sw-t" id="shopWaitT">正在生成付款码，马上就好</div>'
+      + '<div class="sw-s" id="shopWaitS">这一步要连微信的收款通道，通常 2~6 秒。请不要重复点，也别关掉这页。</div></div>';
+    var b = $('shopPayBtn'); if(b) b.hidden = true;
+    var m = $('shopPayMobile'); if(m) m.hidden = true;
+    var rt = $('shopPayRetry'); if(rt) rt.hidden = true;
+    showErr('shopPayErr','');
+    showErr('shopPickErr','');
+    view('shopPay');
+    if(payTimer) clearTimeout(payTimer);
+    payTimer = setTimeout(function(){
+      var t = $('shopWaitT'), s = $('shopWaitS');
+      if(t) t.textContent = '还在生成，别急';
+      if(s) s.textContent = '网络有点慢，已经连着收款通道在等了。别关这页，也别重复付款。';
+    }, 7000);
+  }
+  function payStop(){
+    if(payTimer){ clearTimeout(payTimer); payTimer = 0; }
+  }
+  /* 下单失败不能把客户扔在空白页上：给一句人话 + 一个重试按钮。
+     「收款还没开通」这类不是客户能解决的，退回选档页说明，别让人对着付款页等。 */
+  var PAY_HARD_STOP = { not_ready:1, not_found:1, bad_tier:1 };
+  function payFail(msg, reason){
+    payStop();
+    var qr = $('shopPayQr'); if(qr) qr.innerHTML = '';
+    var rt = $('shopPayRetry'); if(rt) rt.hidden = true;
+    if(PAY_HARD_STOP[reason]){
+      showErr('shopPickErr', msg);
+      view('shopPick');
+      return;
+    }
+    var hint = $('shopPayHint');
+    if(hint) hint.textContent = '这一单没生成成功。点下面重来一次就行，钱没付出去，也不会重复扣。';
+    showErr('shopPayErr', msg);
+    if(rt) rt.hidden = false;
+  }
+
   /* 下单：金额由后台档位表定，前端绝不传价格 */
   function createOrder(tier){
     if(!TIER_TEXT[tier]) return Promise.resolve({ ok:false, reason:'bad_tier' });
     state.tier = tier;
-    return post('/v1/shop/order/create', { tier: tier }).then(function(d){
-      if(!d || d.ok !== true) return d || {ok:false, reason:'network'};
+    payWait(tier);
+    var my = ++paySeq;
+    return post('/v1/shop/order/create', { tier: tier }, 25000).then(function(d){
+      if(my !== paySeq) return d || {ok:false, reason:'stale'};
+      payStop();
+      if(!d || d.ok !== true){
+        var bad = d || {ok:false, reason:'network'};
+        payFail(why(bad.reason), bad.reason);
+        return bad;
+      }
       state.order_id = d.order_id || '';
       state.pay_url = d.pay_url || '';
       state.pay_qr = d.pay_qr || '';
@@ -1597,7 +1675,7 @@ addEventListener('keydown',e=>{
       /* 二维码一出来就自己查「付了没」，客户扫完不用再点任何按钮 */
       if(d.order_id){ try{ startPoll(); }catch(e){} }
       return d;
-    }).catch(function(){ return {ok:false, reason:'network'}; });
+    }).catch(function(){ if(my === paySeq){ payFail(why('network'),'network'); } return {ok:false, reason:'network'}; });
   }
 
   /* 查单：只问自有后台「这笔付了没」，不采信页面自己说的 */
@@ -1697,6 +1775,7 @@ addEventListener('keydown',e=>{
         if(e && e.preventDefault) e.preventDefault();
         if(btn.disabled) return;
         showErr('shopErr','');
+        showErr('shopPickErr','');
         Array.prototype.forEach.call(document.querySelectorAll('.shop-tier'), function(b){
           b.disabled = true;
           b.classList.add('waiting');
@@ -1712,7 +1791,13 @@ addEventListener('keydown',e=>{
     });
     bind('shopClose', close);
     bind('shopDoneClose', close);
-    bind('shopBackPick', function(){ view('shopPick'); });
+    /* 下单失败的重试：重下同一档，不逼客户回选档页再找一遍 */
+    bind('shopPayRetry', function(){
+      var rt = $('shopPayRetry'); if(rt) rt.hidden = true;
+      var r = createOrder(state.tier);
+      if(r && r.catch) r.catch(function(){});
+    });
+    bind('shopBackPick', function(){ payStop(); view('shopPick'); });
     bind('shopFindBack', function(){ view('shopPick'); });
     bind('shopResume', function(){ view('shopFind'); });
     bind('shopFindLocal', function(){
