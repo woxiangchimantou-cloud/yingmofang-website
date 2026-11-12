@@ -74,6 +74,23 @@ nav.solid{background:rgba(8,9,11,.86);backdrop-filter:blur(18px);padding:15px 52
   transition:.3s;background:transparent;
 }
 .navbtn:hover{background:var(--gold);color:#0a0a0a}
+/* 右上角「自助购买 · 自己开号」：全站唯一一个不用加客服的口子（2026-11-12）
+   客户着急的时候只会看右上角，所以给它一点呼吸感，别让它混在导航里 */
+.navbtn-self{position:relative;white-space:nowrap}
+.navbtn-self .nbshort{display:none}
+.navbtn-self::after{content:"";position:absolute;inset:-5px;border:1px solid rgba(224,178,92,.30);
+  pointer-events:none;animation:selfGlow 2.8s ease-in-out infinite}
+@keyframes selfGlow{0%,100%{opacity:.18}50%{opacity:.8}}
+@media (prefers-reduced-motion:reduce){.navbtn-self::after{animation:none;opacity:.45}}
+/* 客户多半在手机上打开这个网站：≤1080 时别的导航按钮会藏起来，
+   唯独这一个必须留着，否则「右上角自助购买」在手机上等于不存在 */
+@media(max-width:1080px){
+  .navbtn.navbtn-self{display:inline-block;margin-left:auto;margin-right:14px;
+    padding:8px 13px;font-size:12px;letter-spacing:.04em}
+  .navbtn-self .nbfull{display:none}
+  .navbtn-self .nbshort{display:inline}
+  .navbtn-self::after{inset:-3px}
+}
 
 /* ── 英雄区 ── */
 header{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
@@ -752,7 +769,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   <div class="navlinks">
     <a href="#wall">片库</a><a href="#caps">能力</a><a href="#inside">界面</a><a href="#devices">多端</a><a href="#price">授权</a>
   </div>
-  <a class="navbtn" href="#buy" id="navBuy">购买 / 注册</a>
+  <a class="navbtn navbtn-self" href="#buy" id="navBuy"><span class="nbfull">自助购买 · 自己开号</span><span class="nbshort">自助购买</span></a>
   <button class="burger" id="burger" type="button" aria-label="打开菜单" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -764,7 +781,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   <a href="#inside">界面</a>
   <a href="#devices">多端</a>
   <a href="#price">授权</a>
-  <a href="#price" class="dcta">获取授权</a>
+  <a href="#buy" class="dcta js-buy" data-shop-open="1">自助购买 · 自己开号</a>
+  <a href="#price">获取授权</a>
 </div>
 
 <header>
@@ -1092,9 +1110,9 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <li>永久免费更新</li>
         <li>优先技术支持</li>
       </ul>
-      <a href="#buy" class="js-buy" data-shop-open="1">立即购买 · 自助开通</a>
+      <a href="#" class="js-kefu">加客服开通 · 人工帮你开</a>
       <a href="#" class="plan-dl js-dl">还没装软件？先下载试用 →</a>
-      <a href="#" class="plan-kefu js-kefu">买之前有疑问？点这里问客服</a>
+      <a href="#buy" class="js-buy plan-kefu" data-shop-open="1">着急？右上角「自助购买」自己开号 →</a>
     </div>
 
     <div class="plan hot">
@@ -1112,9 +1130,9 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <li>永久免费更新</li>
         <li>优先技术支持</li>
       </ul>
-      <a href="#buy" class="js-buy" data-shop-open="1">立即购买 · 自助开通</a>
+      <a href="#" class="js-kefu">加客服开通 · 人工帮你开</a>
       <a href="#" class="plan-dl js-dl">还没装软件？先下载试用 →</a>
-      <a href="#" class="plan-kefu js-kefu">买之前有疑问？点这里问客服</a>
+      <a href="#buy" class="js-buy plan-kefu" data-shop-open="1">着急？右上角「自助购买」自己开号 →</a>
     </div>
   </div>
 </section>
@@ -1164,7 +1182,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
     </details>
     <details>
       <summary>买了能退吗？</summary>
-      <div class="a">本产品提供<b>完整的试用版</b>，功能和正式版一致，试用期内足够你把该试的都试一遍。<b>请试用满意后再购买，购买后不支持退款。</b>若遇到设备不兼容、激活失败导致完全用不了的情况，联系客服协助解决到可用为止。</div>
+      <div class="a">本产品提供<b>完整的试用版</b>，功能和正式版一致，试用期内足够你把该试的都试一遍，<b>建议先试用满意再购买</b>。<br>关于退款：<b>无特殊情况不支持退款</b>；确有特殊情况（比如设备不兼容、激活失败导致完全用不了），<b>可视情况退还部分货款</b>，具体联系客服协商。用不了的情况我们也会先协助你调到可用为止。</div>
     </details>
   </div>
 </section>
@@ -1247,7 +1265,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
     <!-- ① 选档：三张卡一次点完，不另设「选 Windows / NAS」的第二步 -->
     <section class="shop-view" id="shopPick">
       <h3>买一份，马上自己开号</h3>
-      <p class="shop-sub">选一档 → 付款 → 填邮箱和密码，半分钟搞定。<br>不用加客服、不用发截图、不用等人工，付完账号立刻就有。</p>
+      <p class="shop-sub">选一档 → 付款 → 填邮箱和密码，半分钟搞定，不用等人工。<br>想加微信让人工帮你开也行，每一屏右上角都有「客服」。</p>
       <div class="shop-tiers">
         <button class="shop-tier" type="button" data-tier="single_pc">
           <span class="t">单端 · Windows</span>
@@ -1267,7 +1285,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         </button>
       </div>
       <div class="shop-err" id="shopPickErr" hidden></div>
-      <p class="shop-tip">⚠️ 请先试用满意再付款：<b>购买后不支持退款</b>。账号由你自己注册，付款后立刻可用，全程不需要联系客服。</p>
+      <p class="shop-tip">账号由你自己注册，付款后立刻可用，全程不用等人。</p>
       <div class="shop-resume"><a href="#" id="shopResume">已经付过款了？点这里接着开通 →</a></div>
       <div class="shop-kefubox">
         <p class="kq">购买后使用有疑问，想先问清楚？</p>
@@ -1275,7 +1293,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.7 3 2.4 6.5 2.4 10.9c0 2.5 1.5 4.7 3.8 6.1-.2.8-.7 2-.9 2.4-.1.2 0 .4.2.4.3 0 2.4-1.1 3.4-1.7.9.2 1.9.4 3.1.4 5.3 0 9.6-3.5 9.6-7.6S17.3 3 12 3z"/></svg>
           添加客服咨询
         </button>
-        <p class="s">售后答疑专用 · 下单和开号都由你自己完成，不用等人工</p>
+        <p class="s">人工开通 · 售后答疑 · 忘密码换机器都能问</p>
       </div>
     </section>
 
@@ -1345,11 +1363,11 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 <div class="modal" id="qrModal" hidden>
   <div class="modal-card">
     <button class="modal-x" id="qrClose" type="button" aria-label="关闭">✕</button>
-    <h4 class="serif">联系客服（售后）</h4>
+    <h4 class="serif">联系客服</h4>
     <div class="buy-steps">
-      <div class="buy-step"><span class="n">1</span><div>买账号：点价格区的「立即购买」，网页付款后自己注册，不用找客服</div></div>
-      <div class="buy-step"><span class="n">2</span><div>有问题、忘了密码、换了解绑不了的电脑：扫下面加客服</div></div>
-      <div class="buy-step"><span class="n">3</span><div>这里只做售后，<b>不收款、不代开号</b></div></div>
+      <div class="buy-step"><span class="n">1</span><div>想加微信、让人工帮你开通：扫下面的码，把想要的档位告诉客服就行</div></div>
+      <div class="buy-step"><span class="n">2</span><div>着急用：点网页<b>右上角「自助购买 · 自己开号」</b>，付款后自己填邮箱和密码，马上能用</div></div>
+      <div class="buy-step"><span class="n">3</span><div>忘了密码、换机器解绑不了、装完用不起来：也是扫下面加客服</div></div>
     </div>
     <div class="qr-step" style="margin-top:16px">售后客服微信</div>
     <div class="qr-grid">
@@ -1362,8 +1380,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <div class="qr-cap"><b>客服二号</b> · 备用</div>
       </div>
     </div>
-    <p>永久售后 · 一号加不上就扫二号<br>购买请走价格区的「立即购买」，账号付完自己就能开</p>
-    <p class="buy-notice">⚠️ 请先试用满意再付款：<b>付款开通后暂不支持退款，望周知</b></p>
+    <p>永久售后 · 一号加不上就扫二号<br>想自己开号：点网页右上角「自助购买 · 自己开号」</p>
   </div>
 </div>
 
