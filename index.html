@@ -685,10 +685,9 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 .shop-resume{margin-top:20px;padding-top:16px;border-top:1px solid rgba(224,178,92,.14)}
 .shop-resume a,.shop-link{color:var(--gold);font-size:12px;text-decoration:none;cursor:pointer}
 .shop-resume a:hover,.shop-link:hover{text-decoration:underline}
-/* 价格卡下方的「先下载」入口 + 下载弹层 */
-.plan-dl{display:block;margin-top:10px;text-align:center;font-size:11.5px;color:var(--ink-3);
-  text-decoration:none;letter-spacing:.04em;transition:color .2s}
-.plan-dl:hover{color:var(--gold)}
+/* 下载弹层（2026-11-17 起价格卡上的「先下载试用」小入口已删，弹层暂时没有入口。
+   先留着：顶部下载条已经给了 115 / 夸克 / GitHub 三个直达口，够用；
+   要恢复只需在价格卡里加一个 class="js-dl" 的元素） */
 #dlModal{z-index:320}
 /* 客服弹窗必须压在购买层(.shop 300)之上，否则从购买页点开会看不见 */
 #qrModal{z-index:400}
@@ -707,6 +706,13 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
 .plan a.plan-kefu:hover{border-color:var(--gold);background:rgba(224,178,92,.08);color:var(--gold-2)}
 .plan.hot a.plan-kefu{background:transparent;color:var(--gold);border-color:rgba(224,178,92,.4);font-weight:400}
 .plan.hot a.plan-kefu:hover{background:rgba(224,178,92,.08);color:var(--gold-2)}
+/* 老客户补差价升级：只放在全家桶卡最下面一行小字，不跟新客户抢视线。
+   🔴 必须显式压掉 `.plan a` 的边框/内边距 和 `.plan.hot a` 的金色实心底：
+   否则这行小字会变成「金底灰字」，在全家桶卡里几乎看不清（2026-11-17 实测踩到）。 */
+.plan a.plan-up,.plan.hot a.plan-up{display:block;margin-top:12px;text-align:center;
+  font-size:11.5px;letter-spacing:.04em;color:var(--ink-3);
+  background:transparent;border:0;border-top:1px dashed rgba(224,178,92,.22);padding:10px 0 0}
+.plan a.plan-up:hover,.plan.hot a.plan-up:hover{background:transparent;color:var(--gold-2)}
 /* 购买层里的客服按钮：客户在付款前后最容易卡住，要做成按钮，不能只是一行小字 */
 .shop-kefubox{margin:22px 0 0;padding:16px;border:1px solid rgba(224,178,92,.3);
   background:rgba(224,178,92,.045);text-align:center}
@@ -745,8 +751,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   border:1px solid var(--gold);color:var(--gold);font-size:28px;margin:4px auto 20px}
 #shopDone h3,#shopDone .shop-sub{text-align:center}
 .shop-done-mail{display:block;text-align:center;font-size:16px;color:var(--gold-2);margin:8px 0 20px;word-break:break-all}
-#shopPayQr img{max-width:220px;display:block;margin:0 auto 18px;background:#fff;padding:8px}
-#shopPayQr{font-size:12px;color:var(--ink-3);text-align:center;margin-bottom:14px}
+#shopPayQr img,#upQr img{max-width:220px;display:block;margin:0 auto 18px;background:#fff;padding:8px}
+#shopPayQr,#upQr{font-size:12px;color:var(--ink-3);text-align:center;margin-bottom:14px}
 @media (max-width:640px){
   .shop-box{padding:28px 20px 24px}
   .shop-tiers{grid-template-columns:1fr}
@@ -1111,7 +1117,6 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <li>优先技术支持</li>
       </ul>
       <a href="#" class="js-kefu">加客服开通 · 人工帮你开</a>
-      <a href="#" class="plan-dl js-dl">还没装软件？先下载试用 →</a>
       <a href="#buy" class="js-buy plan-kefu" data-shop-open="1">着急？右上角「自助购买」自己开号 →</a>
     </div>
 
@@ -1131,8 +1136,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <li>优先技术支持</li>
       </ul>
       <a href="#" class="js-kefu">加客服开通 · 人工帮你开</a>
-      <a href="#" class="plan-dl js-dl">还没装软件？先下载试用 →</a>
       <a href="#buy" class="js-buy plan-kefu" data-shop-open="1">着急？右上角「自助购买」自己开号 →</a>
+      <a href="#" class="plan-up js-up">已买单端？补差价 ¥20 升全家桶 →</a>
     </div>
   </div>
 </section>
@@ -1233,7 +1238,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
   </div>
 </footer>
 
-<!-- 下载弹层：价格卡的「先下载试用」和购买页都指这里，三种方式一次给全 -->
+<!-- 下载弹层：三种方式一次给全（入口按钮 2026-11-17 已删，弹层保留备用） -->
 <div class="shop" id="dlModal" hidden>
   <div class="shop-box" style="max-width:520px">
     <button class="shop-x" id="dlClose" type="button" aria-label="关闭">✕</button>
@@ -1356,6 +1361,35 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       <button class="shop-btn" id="shopFindBtn" type="button">继续开通</button>
       <div class="shop-err" id="shopFindErr" hidden></div>
       <button class="shop-plain" id="shopFindBack" type="button">← 回到选档</button>
+    </section>
+
+    <!-- ⑥ 老客户补差价升级：单端号 → 全家桶（差价固定 ¥20，由后台定价） -->
+    <section class="shop-view" id="shopUp" hidden>
+      <h3>补差价升级成全家桶</h3>
+      <p class="shop-sub">已经买了单端版？补 <b>¥20</b> 就能升成三端全家桶（WIN / NAS / 手机 各 3 台）。<br>填当初注册的邮箱和密码，付完立刻生效，不用重装软件。</p>
+      <div id="upForm">
+        <label class="shop-field"><span>注册用的邮箱</span>
+          <input id="upEmail" type="email" autocomplete="username" placeholder="you@example.com">
+        </label>
+        <label class="shop-field"><span>密码</span>
+          <input id="upPwd" type="password" autocomplete="current-password" placeholder="当初注册时设的密码">
+        </label>
+        <button class="shop-btn" id="upBtn" type="button">去付款 · 补差价 ¥20</button>
+      </div>
+      <div id="upPay" hidden>
+        <div class="shop-order" id="upOrderInfo"></div>
+        <p class="shop-sub" id="upPayHint">用微信扫下面的码付款，这个码只对这一单有效</p>
+        <div id="upQr"></div>
+        <button class="shop-btn" id="upRetry" type="button" hidden>重新生成付款码</button>
+      </div>
+      <div id="upDone" hidden>
+        <div class="shop-ok">✓</div>
+        <h3>升级完成</h3>
+        <p class="shop-sub">回软件重新登录一下，三端配额就都是 3 台了。<br>原来绑好的设备不用重绑，也不用重装。</p>
+      </div>
+      <div class="shop-err" id="upErr" hidden></div>
+      <p class="shop-tip" id="upTip">能自助升的是<b>标准单端号</b>（PC 1 台 或 NAS 1 台）。<br>客服手工开的号、或者想顺便换绑设备，<a href="#" class="js-kefu">点这里找客服</a>。</p>
+      <button class="shop-plain" id="upBack" type="button">← 回到选档</button>
     </section>
   </div>
 </div>
@@ -1516,7 +1550,7 @@ addEventListener('keydown',e=>{
   'use strict';
   var API = 'https://api.yingmofang.xyz';
   var STORE_KEY = 'ymf_shop_last_order';
-  var VIEWS = ['shopPick','shopPay','shopReg','shopDone','shopFind'];
+  var VIEWS = ['shopPick','shopPay','shopReg','shopDone','shopFind','shopUp'];
   var TIER_TEXT = {
     single_pc: '单端版 · Windows',
     single_nas: '单端版 · NAS',
@@ -1750,6 +1784,142 @@ addEventListener('keydown',e=>{
       }).catch(function(){ return {ok:false, reason:'network'}; });
   }
 
+  /* ── 老客户补差价升级（2026-11-17 用户要的）────────────────────────
+     「有些可能只想先买单端，然后后续再升级成全家桶」。
+     规矩全是后台定的：差价固定 ¥20、只认标准单端号（PC 1 台 / NAS 1 台）。
+     页面只做三件事：收邮箱密码 → 显示当次订单的收款码 → 盯后台问「升好了没」。
+     页面绝不传金额，改价改不动。 */
+  var UP_ERR = {
+    already_bundle: '这个邮箱已经是全家桶了，不用再补钱。直接回软件登录就行。',
+    not_single: '这个账号不是标准单端（PC 1 台或 NAS 1 台），自助升级会算错钱，麻烦找客服处理，先别自己付。',
+    account_not_found: '这个邮箱没注册过。想新买请回选档页；之前用别的邮箱买的，换那个邮箱再试。',
+    bad_password: '密码不对。就是登录软件时用的那个密码。',
+    banned: '这个账号已被停用，请联系客服处理。',
+    rate_limited: '试得有点快，等一分钟再试。'
+  };
+  /* 这些原因客户自己怎么点都没用，必须退回填表页 + 说明，不能让他对着付款页干等 */
+  var UP_HARD_STOP = {
+    already_bundle:1, not_single:1, account_not_found:1, bad_password:1,
+    banned:1, bad_email:1, not_found:1, not_ready:1
+  };
+  function upWhy(r){ return UP_ERR[r] || why(r); }
+  var upTimer = null, upSeq = 0;
+  var upState = { order_id: '' };
+
+  function upReset(){
+    if(upTimer){ clearInterval(upTimer); upTimer = 0; }
+    upSeq++;
+    upState.order_id = '';
+    showErr('upErr','');
+    var f = $('upForm'), p = $('upPay'), d = $('upDone'), t = $('upTip');
+    if(f) f.hidden = false;
+    if(p) p.hidden = true;
+    if(d) d.hidden = true;
+    if(t) t.hidden = false;
+    var qr = $('upQr'); if(qr) qr.innerHTML = '';
+    var rt = $('upRetry'); if(rt) rt.hidden = true;
+    var btn = $('upBtn'); if(btn){ btn.disabled = false; btn.textContent = '去付款 · 补差价 ¥20'; }
+  }
+  function upFinish(){
+    if(upTimer){ clearInterval(upTimer); upTimer = 0; }
+    var f = $('upForm'), p = $('upPay'), d = $('upDone'), t = $('upTip');
+    if(f) f.hidden = true;
+    if(p) p.hidden = true;
+    if(t) t.hidden = true;
+    if(d) d.hidden = false;
+    showErr('upErr','');
+    clearSave();
+  }
+  /* 查这一单升好了没：后台会自己去支付平台核单，绝不采信前端 */
+  function upPoll(){
+    if(!upState.order_id) return Promise.resolve({ ok:false, status:'pending' });
+    var my = upSeq;
+    return post('/v1/shop/order/status', { order_id: upState.order_id })
+      .then(function(d){
+        if(my !== upSeq) return d;
+        if(d && d.ok === true && d.status === 'paid' && d.upgrade === true) upFinish();
+        return d || { ok:false, status:'pending' };
+      }).catch(function(){ return { ok:false, reason:'network' }; });
+  }
+  function upStartPoll(){
+    if(upTimer) clearInterval(upTimer);
+    var n = 0;
+    upTimer = setInterval(function(){
+      n++;
+      if(n > 90){ clearInterval(upTimer); upTimer = 0; return; }
+      upPoll();
+    }, 2000);
+  }
+  function upShowQr(d){
+    upState.order_id = d.order_id || '';
+    var amt = Number(d.amount || 0);
+    var safeAmt = isFinite(amt) && amt > 0 ? amt.toFixed(2) : '20.00';
+    var info = $('upOrderInfo');
+    if(info) info.innerHTML = '升级到 <b>三端全家桶</b><br>应付差价 <b>¥' + safeAmt + '</b>';
+    var qr = $('upQr');
+    var q = String(d.pay_qr || '');
+    if(qr) qr.innerHTML = /^(https:\/\/|data:image\/)/.test(q)
+      ? '<img alt="付款二维码" src="' + q.replace(/["<>]/g, '') + '">'
+      : '<div class="shop-wait"><div class="sw-spin"></div><div class="sw-t">正在取付款码…</div></div>';
+    var hint = $('upPayHint');
+    if(hint) hint.textContent = '用微信扫下面的码付款，这个码只对这一单有效';
+    var f = $('upForm'), p = $('upPay');
+    if(f) f.hidden = true;
+    if(p) p.hidden = false;
+    showErr('upErr','');
+    if(d.order_id) upStartPoll();
+  }
+  function upFail(msg, reason){
+    if(upTimer){ clearInterval(upTimer); upTimer = 0; }
+    var rt = $('upRetry');
+    var qr = $('upQr'); if(qr) qr.innerHTML = '';
+    showErr('upErr', msg);
+    if(UP_HARD_STOP[reason] || !upState.order_id){
+      var f = $('upForm'), p = $('upPay');
+      if(f) f.hidden = false;
+      if(p) p.hidden = true;
+      upState.order_id = '';
+      if(rt) rt.hidden = true;
+      return;
+    }
+    if(rt) rt.hidden = false;
+  }
+  /* 点「去付款」：先自检格式，再让后台判断这号到底能不能升（后台说了算） */
+  function upSubmit(){
+    var mail = $('upEmail'), pwd = $('upPwd'), btn = $('upBtn');
+    var email = String((mail && mail.value) || '').trim().toLowerCase();
+    var password = String((pwd && pwd.value) || '');
+    showErr('upErr','');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      showErr('upErr', '邮箱看起来不太对，检查一下再试。');
+      return Promise.resolve({ ok:false, reason:'bad_email' });
+    }
+    if(!password){
+      showErr('upErr', '密码还没填。填当初注册时设的那个密码。');
+      return Promise.resolve({ ok:false, reason:'bad_password' });
+    }
+    var my = ++upSeq;
+    if(btn){ btn.disabled = true; btn.textContent = '正在生成付款码…'; }
+    return post('/v1/shop/upgrade/create', { email: email, password: password }, 25000).then(function(d){
+      if(my !== upSeq) return d || { ok:false, reason:'stale' };
+      if(btn){ btn.disabled = false; btn.textContent = '去付款 · 补差价 ¥20'; }
+      if(!d || d.ok !== true){
+        var bad = d || { ok:false, reason:'network' };
+        upState.order_id = '';
+        upFail(upWhy(bad.reason), bad.reason);
+        return bad;
+      }
+      if(d.upgraded){ upFinish(); return d; }   /* 开发期模拟：后台直接升好 */
+      upShowQr(d);
+      return d;
+    }).catch(function(){
+      if(btn){ btn.disabled = false; btn.textContent = '去付款 · 补差价 ¥20'; }
+      upState.order_id = '';
+      upFail(upWhy('network'), 'network');
+      return { ok:false, reason:'network' };
+    });
+  }
+
   /* 中途关了页面：同机一键续办 / 换机凭订单号续办 */
   function resumeLocal(){
     var o = load();
@@ -1798,6 +1968,18 @@ addEventListener('keydown',e=>{
     var layer = $('shopLayer');
     if(layer) layer.hidden = true;
     try{ document.body.style.overflow = ''; }catch(e){}
+    if(upTimer){ clearInterval(upTimer); upTimer = 0; }
+  }
+  /* 价格卡里的「已经买了单端？」小字入口：直接进升级页，不经过选档 */
+  function openUpgrade(){
+    var layer = $('shopLayer');
+    if(!layer) return;
+    layer.hidden = false;
+    try{ document.body.style.overflow = 'hidden'; }catch(e){}
+    upReset();
+    view('shopUp');
+    var mail = $('upEmail');
+    if(mail && mail.focus) setTimeout(function(){ try{ mail.focus(); }catch(e){} }, 30);
   }
   function isBuyHash(){ return /^#(buy|register|shop)/i.test(location.hash || ''); }
 
@@ -1845,6 +2027,16 @@ addEventListener('keydown',e=>{
     bind('shopBackPick', function(){ payStop(); view('shopPick'); });
     bind('shopFindBack', function(){ view('shopPick'); });
     bind('shopResume', function(){ view('shopFind'); });
+    /* 老客户升级：价格卡小字入口 + 升级页三个按钮 */
+    Array.prototype.forEach.call(document.querySelectorAll('.js-up'), function(el){
+      el.addEventListener('click', function(e){ if(e && e.preventDefault) e.preventDefault(); openUpgrade(); });
+    });
+    bind('upBtn', function(){ upSubmit(); });
+    bind('upRetry', function(){
+      var rt = $('upRetry'); if(rt) rt.hidden = true;
+      upSubmit();
+    });
+    bind('upBack', function(){ upReset(); view('shopPick'); });
     bind('shopFindLocal', function(){
       resumeLocal().then(function(d){
         if(!d || (d.ok === false)) showErr('shopFindErr', why(d && d.reason));
@@ -1915,11 +2107,15 @@ addEventListener('keydown',e=>{
     API: API, state: state, open: open, close: close,
     createOrder: createOrder, pollPaid: pollPaid, register: register,
     resumeLocal: resumeLocal, resumeById: resumeById, onPaid: onPaid,
-    why: why, view: view, isBuyHash: isBuyHash
+    why: why, view: view, isBuyHash: isBuyHash,
+    /* 补差价升级（2026-11-17）*/
+    openUpgrade: openUpgrade, upSubmit: upSubmit, upPoll: upPoll,
+    upReset: upReset, upWhy: upWhy
   };
 })();
 
-/* 下载弹层：价格卡下方的「还没装软件？先下载试用」。
+/* 下载弹层（原入口＝价格卡下方的「还没装软件？先下载试用」，2026-11-17 已按客户要求删掉）。
+ * 弹层本身留着：以后想恢复，只要在任何地方挂一个 class="js-dl" 的元素就能打开。
  * 单独一个 IIFE，不与购买流程共享状态，关掉它不影响正在走的订单。 */
 (function(){
   var m = document.getElementById('dlModal');
