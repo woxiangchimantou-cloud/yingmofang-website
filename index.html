@@ -1070,11 +1070,11 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       <div class="dl-sub">Windows x64 安装包 · 装完直接试用 6 小时，满意再开通账号<br>NAS 镜像与安卓 APK 在下载页内附说明</div>
     </div>
     <div class="dl-row">
-      <a class="dlbtn" id="dl115" href="https://115cdn.com/s/sws090d36ox?password=8888" target="_blank" rel="noopener">
-        <span class="dn">115 网盘</span><span class="dc" id="dc115">提取码 8888</span>
+      <a class="dlbtn" id="dl115" data-mirror="115" href="https://115cdn.com/s/swlzenj36ox?password=8888" target="_blank" rel="noopener">
+        <span class="dn">115 网盘</span><span class="dc" id="dc115" data-mirror-code="115" data-code-tpl="提取码 {{code}}">提取码 8888</span>
       </a>
-      <a class="dlbtn" id="dlQuark" href="https://pan.quark.cn/s/e88edb359ed2?pwd=FWhU" target="_blank" rel="noopener">
-        <span class="dn">夸克网盘</span><span class="dc" id="dcQuark">提取码 FWhU</span>
+      <a class="dlbtn" id="dlQuark" data-mirror="quark" href="https://pan.quark.cn/s/9432e7bd9dab?pwd=ME3j" target="_blank" rel="noopener">
+        <span class="dn">夸克网盘</span><span class="dc" id="dcQuark" data-mirror-code="quark" data-code-tpl="提取码 {{code}}">提取码 ME3j</span>
       </a>
       <a class="dlbtn ghost" href="https://github.com/woxiangchimantou-cloud/yingmofangupdate/releases/latest" target="_blank" rel="noopener">
         <span class="dn">GitHub</span><span class="dc">海外直链</span>
@@ -1093,8 +1093,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
         <li>含手机端（同一 Wi-Fi 下用）</li>
         <li>不做功能阉割</li>
       </ul>
-      <a class="sec" href="https://115cdn.com/s/sws090d36ox?password=8888" target="_blank" rel="noopener">115 网盘下载</a>
-      <a class="sec" href="https://pan.quark.cn/s/e88edb359ed2?pwd=FWhU" target="_blank" rel="noopener">夸克网盘下载</a>
+      <a class="sec" data-mirror="115" href="https://115cdn.com/s/swlzenj36ox?password=8888" target="_blank" rel="noopener">115 网盘下载</a>
+      <a class="sec" data-mirror="quark" href="https://pan.quark.cn/s/9432e7bd9dab?pwd=ME3j" target="_blank" rel="noopener">夸克网盘下载</a>
     </div>
 
     <div class="plan">
@@ -1210,8 +1210,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       </div>
       <div class="foot-col">
         <h5>下载</h5>
-        <a href="https://115cdn.com/s/sws090d36ox?password=8888" target="_blank" rel="noopener">115 网盘（8888）</a>
-        <a href="https://pan.quark.cn/s/e88edb359ed2?pwd=FWhU" target="_blank" rel="noopener">夸克网盘（FWhU）</a>
+        <a data-mirror="115" href="https://115cdn.com/s/swlzenj36ox?password=8888" target="_blank" rel="noopener">115 网盘<span data-mirror-code="115" data-code-tpl="（{{code}}）">（8888）</span></a>
+        <a data-mirror="quark" href="https://pan.quark.cn/s/9432e7bd9dab?pwd=ME3j" target="_blank" rel="noopener">夸克网盘<span data-mirror-code="quark" data-code-tpl="（{{code}}）">（ME3j）</span></a>
         <a href="https://github.com/woxiangchimantou-cloud/yingmofangupdate/releases/latest" target="_blank" rel="noopener">GitHub 最新版</a>
         <a href="#faq">常见问题</a>
       </div>
@@ -1241,11 +1241,11 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
     <h3>先装上，免费试 6 小时</h3>
     <p class="shop-sub">装完直接能用，不用注册、不用付款。<br>试用期内功能不阉割，觉得合适再开通，不合适也不删你的文件。</p>
     <div class="dl-row">
-      <a class="dlbtn" href="https://115cdn.com/s/sws090d36ox?password=8888" target="_blank" rel="noopener">
-        <span class="dn">115 网盘</span><span class="dc">提取码 8888</span>
+      <a class="dlbtn" data-mirror="115" href="https://115cdn.com/s/swlzenj36ox?password=8888" target="_blank" rel="noopener">
+        <span class="dn">115 网盘</span><span class="dc" data-mirror-code="115" data-code-tpl="提取码 {{code}}">提取码 8888</span>
       </a>
-      <a class="dlbtn" href="https://pan.quark.cn/s/e88edb359ed2?pwd=FWhU" target="_blank" rel="noopener">
-        <span class="dn">夸克网盘</span><span class="dc">提取码 FWhU</span>
+      <a class="dlbtn" data-mirror="quark" href="https://pan.quark.cn/s/9432e7bd9dab?pwd=ME3j" target="_blank" rel="noopener">
+        <span class="dn">夸克网盘</span><span class="dc" data-mirror-code="quark" data-code-tpl="提取码 {{code}}">提取码 ME3j</span>
       </a>
       <a class="dlbtn ghost" href="https://github.com/woxiangchimantou-cloud/yingmofangupdate/releases/latest" target="_blank" rel="noopener">
         <span class="dn">GitHub</span><span class="dc">海外直链</span>
@@ -1473,14 +1473,21 @@ addEventListener('keydown',e=>{
   const chain=(list)=>list.reduce((p,u)=>p.catch(()=>get(u,5000)),Promise.reject());
 
   // 1) 网盘镜像
+  // 页面上每一处下载入口都挂 data-mirror="115|quark"，这里按属性统一找，不在脚本里写死 id。
+  // 🔴 2026-11-17：原先只认 dl115/dlQuark 两个 id，于是「下载条」会跟着 json 变，
+  //    而免费试用卡、页脚、下载弹层里写死的老链接永远停在旧地址。现在新增一处入口
+  //    只要补 data-mirror 属性即可，脚本不用动。
   chain(MIRROR_JSON).then(cfg=>{
-    const map={115:['dl115','dc115','提取码 '],quark:['dlQuark','dcQuark','提取码 ']};
-    (cfg.mirrors||[]).forEach(m=>{
-      const k=map[m.type]; if(!k||!m.url)return;
-      const a=document.getElementById(k[0]); if(!a)return;
-      a.href=m.url;
-      const c=document.getElementById(k[1]);
-      if(c)c.textContent=m.extract_code?k[2]+m.extract_code:'网盘下载';
+    if(!cfg||!Array.isArray(cfg.mirrors))return;
+    const q=(sel)=>Array.prototype.slice.call(document.querySelectorAll(sel));
+    cfg.mirrors.forEach(m=>{
+      if(!m||!m.url||!/^[a-z0-9_-]+$/i.test(String(m.type||'')))return;
+      q('[data-mirror="'+m.type+'"]').forEach(a=>{a.href=m.url;});
+      if(!m.extract_code)return;
+      q('[data-mirror-code="'+m.type+'"]').forEach(el=>{
+        const tpl=el.getAttribute('data-code-tpl')||'{{code}}';
+        el.textContent=tpl.replace('{{code}}',m.extract_code);
+      });
     });
   }).catch(()=>{});   // 静默失败：兜底值本来就对
 
@@ -1521,7 +1528,7 @@ addEventListener('keydown',e=>{
        以前这里没映射，客户看到的是「没成功，请再试一次」，越试越懵。 */
     not_found: '收款还没开通，请稍后再来；着急的话联系客服。',
     bad_tier: '没认出这一档，请回到选档重新点一次。',
-    invalid_code: '这个兑换码不对，或者已经用过了。核对一下再试；也可以把微信账单发给客服，一样能给你开通。',
+    invalid_code: '这一单的单据没对上，但钱已经到账、不用重新付。刚已自动重试一次：也可能这单早就开好了，先回软件用刚才的邮箱密码登录；还进不去就把微信账单截图发给客服，一分钟给你开好。',
     no_order: '这台电脑上没找到上次的订单。换过电脑或清过浏览器的话，把微信账单里的「交易单号」填进来就行。',
     /* 找回接口专用：查不到这笔交易单号 */
     no_such_order: '没查到这笔付款。先确认交易单号复制完整（是一长串数字，别少了头尾）；实在不行把微信账单那张截图发给客服，一样能给你开通。',
@@ -1705,6 +1712,29 @@ addEventListener('keydown',e=>{
   }
 
   /* 注册：客户端先做最基本的格式检查，少一次往返、少一次等待 */
+  /* 开号成功的收尾：清掉本机单据，把邮箱显示到完成页 */
+  function regDone(email){
+    clearSave();
+    var el = $('shopDoneEmail');
+    if(el) el.textContent = email;
+    view('shopDone');
+  }
+  /* 2026-11-13 客户实付踩到：付完钱点「完成注册」报「兑换码不对」。
+     根因是同一单被重复发码，页面手上那个已经被订单里的新码顶掉。
+     这里失败后自己回后台取这一单当前有效的码再试一次 —— 客户什么都不用做。 */
+  function retryWithFreshCode(email, password){
+    if(!state.order_id) return Promise.resolve(null);
+    return post('/v1/shop/order/status', { order_id: state.order_id }).then(function(s){
+      if(!s || s.ok !== true || s.status !== 'paid' || !s.code || s.code === state.code) return null;
+      state.code = s.code;
+      save({ order_id: state.order_id, code: s.code, tier: state.tier });
+      return post('/v1/shop/register', { code: s.code, email: email, password: password })
+        .then(function(d2){
+          if(d2 && d2.ok === true) regDone(email);
+          return d2 || { ok:false, reason:'network' };
+        });
+    }).catch(function(){ return null; });
+  }
   function register(email, password, code){
     email = String(email||'').trim().toLowerCase();
     password = String(password||'');
@@ -1712,11 +1742,9 @@ addEventListener('keydown',e=>{
     if(password.length < 8) return Promise.resolve({ok:false, reason:'bad_password'});
     return post('/v1/shop/register', { code: code || state.code, email: email, password: password })
       .then(function(d){
-        if(d && d.ok === true){
-          clearSave();
-          var el = $('shopDoneEmail');
-          if(el) el.textContent = email;
-          view('shopDone');
+        if(d && d.ok === true){ regDone(email); return d; }
+        if(d && d.reason === 'invalid_code'){
+          return retryWithFreshCode(email, password).then(function(d2){ return d2 || d; });
         }
         return d || {ok:false, reason:'network'};
       }).catch(function(){ return {ok:false, reason:'network'}; });
@@ -1838,10 +1866,22 @@ addEventListener('keydown',e=>{
     });
     bind('shopRegBtn', function(){
       var btn = $('shopRegBtn');
-      if(btn) btn.disabled = true;
+      /* 连点两下会发两次注册：第一下发成功、第二下撞「已用」，客户看到红条以为白付了。
+         按钮自己上锁 + 变字，客户看得见「在动」。 */
+      if(btn){
+        if(btn.disabled) return;
+        btn.disabled = true;
+        btn.dataset.label = btn.textContent;
+        btn.textContent = '正在开通…';
+      }
+      var unlock = function(){
+        if(!btn) return;
+        btn.disabled = false;
+        btn.textContent = btn.dataset.label || '完成注册';
+      };
       var mail = $('shopEmail'), pwd = $('shopPwd');
       register(mail && mail.value, pwd && pwd.value).then(function(d){
-        if(btn) btn.disabled = false;
+        unlock();
         if(d && d.ok === false) showErr('shopErr', why(d.reason));
       });
     });
