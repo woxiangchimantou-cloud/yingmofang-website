@@ -1310,9 +1310,11 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:78px 52px 34px}
       <div id="shopPayQr"></div>
       <div class="shop-err" id="shopPayErr" hidden></div>
       <button class="shop-btn" id="shopPayRetry" type="button" hidden>重新生成付款码</button>
+      <button class="shop-btn" id="shopPayCheck" type="button" hidden>我已经付好了，点这里立刻核对</button>
       <button class="shop-btn" id="shopPayBtn" type="button" hidden>在手机上付款？点这里</button>
       <p class="shop-tip" id="shopPayMobile" hidden>你现在是用手机看这页的话，<b>请换另一台手机扫上面的码</b>，或者到电脑上打开这个页面再买。微信这个码不能长按识别、也不能存进相册。</p>
       <p class="shop-tip">付完这页<b>会自动继续</b>，请先别关。密码由你自己设，不用收验证码，也不用加客服。</p>
+      <button class="shop-plain" id="shopPayFind" type="button">付完把页面关了？用交易单号找回 →</button>
       <div class="shop-kefubox">
         <p class="kq">付了钱页面没动，或者码扫不上？</p>
         <button class="shop-kefubtn js-kefu" type="button">
@@ -1843,12 +1845,16 @@ addEventListener('keydown',e=>{
   }
   function upStartPoll(){
     if(upTimer) clearInterval(upTimer);
-    var n = 0;
+    /* 和普通购买同一个坑（2026-11-17）：原来 90 次 × 2 秒就停，客户付得慢一点
+       页面就再也不问了。升级这 20 块同样要能一直等。 */
+    var started = Date.now();
     upTimer = setInterval(function(){
-      n++;
-      if(n > 90){ clearInterval(upTimer); upTimer = 0; return; }
+      if(Date.now() - started > POLL_MAX_MS || !$('upPay') || $('upPay').hidden){
+        clearInterval(upTimer); upTimer = 0; return;
+      }
+      if(document.hidden) return;
       upPoll();
-    }, 2000);
+    }, POLL_MS);
   }
   function upShowQr(d){
     upState.order_id = d.order_id || '';
@@ -2024,6 +2030,20 @@ addEventListener('keydown',e=>{
       var r = createOrder(state.tier);
       if(r && r.catch) r.catch(function(){});
     });
+    /* 2026-11-17：付完钱页面没动静时的两个自救口。
+       ① 立刻核对（后台会自己去支付平台查单）；② 用微信账单的交易单号找回 —— 
+       客户把页面关了也不至于钱白花，不用回头找客服。 */
+    bind('shopPayCheck', function(){
+      var b = $('shopPayCheck');
+      if(b){ b.disabled = true; b.textContent = '正在核对…'; }
+      pollNow().then(function(d){
+        if(b && !(d && d.code)){
+          b.disabled = false;
+          b.textContent = '我已经付好了，点这里立刻核对';
+        }
+      });
+    });
+    bind('shopPayFind', function(){ payStop(); stopPoll(); view('shopFind'); });
     bind('shopBackPick', function(){ payStop(); view('shopPick'); });
     bind('shopFindBack', function(){ view('shopPick'); });
     bind('shopResume', function(){ view('shopFind'); });
@@ -2084,19 +2104,59 @@ addEventListener('keydown',e=>{
     if(isBuyHash()) open();
   }
 
-  /* 轮询只查自有后台；生产里后台会先向支付平台主动查单，不采信前端 */
-  var pollTimer = null, pollCount = 0;
+  /* 轮询只查自有后台；生产里后台会先向支付平台主动查单，不采信前端。
+     🔴 2026-11-17 客户报「付款了，但是没有跳转」——真凶就在这里：
+        原来是 90 次 × 2 秒 = 3 分钟就永久停。查当天 6 笔实付：拿到码的 4 笔
+        付款都在 60 秒内；没拿到码的 2 笔分别用了 280 秒、342 秒 —— 页面早就不问了，
+        客户对着二维码干等，钱付了、订单也是 paid，却停在付款页拿不到兑换码。
+     现在的规矩：
+        ① 只要还停在付款页就一直问（上限 1 小时），不再 3 分钟就死；
+        ② 间隔 3 秒而不是 2 秒：后台限流按 IP 是 30 次/分钟，2 秒正好卡在边界上，
+           同一网络开两个页面（手机+电脑）就会互相把对方限流成 pending；
+        ③ 页面在后台时不查（浏览器会把定时器压到 1 分钟一次），切回来立刻补一次。 */
+  var POLL_MS = 3000, POLL_MAX_MS = 60 * 60 * 1000, CHECK_HINT_MS = 120 * 1000;
+  var pollTimer = null, pollStartAt = 0, pollCount = 0;
+  function payViewOpen(){
+    var el = $('shopPay');
+    return !!(el && !el.hidden);
+  }
+  function stopPoll(){
+    if(pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+  }
   function startPoll(){
     if(pollTimer) clearInterval(pollTimer);
+    pollStartAt = Date.now();
     pollCount = 0;
+    /* 新开一单：上一个单留下的「我已经付好了」按钮要收回去 */
+    var chk = $('shopPayCheck'); if(chk) chk.hidden = true;
     pollTimer = setInterval(function(){
+      if(!payViewOpen() || Date.now() - pollStartAt > POLL_MAX_MS){ stopPoll(); return; }
+      /* 等了两分钟还没动静，把「已经付了」的出口亮出来（客户不会怪页面，但会慌） */
+      if(Date.now() - pollStartAt > CHECK_HINT_MS){
+        var c = $('shopPayCheck'); if(c && c.hidden) c.hidden = false;
+      }
+      if(document.hidden) return;
       pollCount++;
-      if(pollCount > 90){ clearInterval(pollTimer); pollTimer = null; return; }
-      pollPaid().then(function(d){
-        if(d && d.code){ clearInterval(pollTimer); pollTimer = null; }
-      });
-    }, 2000);
+      pollPaid().then(function(d){ if(d && d.code) stopPoll(); });
+    }, POLL_MS);
   }
+  /* 客户自己点「我已经付好了」：立刻查一次，并把轮询续上（超过 1 小时的单也能救） */
+  function pollNow(){
+    startPoll();
+    return pollPaid().then(function(d){
+      if(d && d.code) return d;
+      var h = $('shopPayHint');
+      if(h) h.textContent = '后台还没收到这笔付款。已经付过的话等几秒它会自己继续；'
+        + '付完把页面关了，就用下面的「交易单号找回」。';
+      return d;
+    });
+  }
+  document.addEventListener('visibilitychange', function(){
+    /* 客户去手机付款、把电脑标签放后台，回来时浏览器才恢复定时器 —— 这里立刻补一次 */
+    if(!document.hidden && pollTimer){
+      pollPaid().then(function(d){ if(d && d.code) stopPoll(); });
+    }
+  });
 
   /* 页面是静态站，DOM 可能还没解析完（脚本在 body 末尾，通常已就绪） */
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindAll);
